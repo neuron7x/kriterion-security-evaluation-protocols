@@ -118,6 +118,7 @@ Outputs are written to:
 ├── benchmark/
 ├── docs/
 ├── tools/
+├── self-evaluation/
 └── assets/
 ```
 
@@ -146,6 +147,23 @@ It does **not** claim independently verified real-world superiority over frontie
 - `tools/verify_manifest.py` verifies repository integrity
 - `schemas/` define machine-readable contracts
 - `execution/` documents the deterministic run path
+
+### Self-evaluation proof surface
+
+Deterministic self-evaluation artifacts live under `self-evaluation/`:
+- `self-evaluation/kriterion-self-eval-bundle.json`
+- `self-evaluation/kriterion-self-eval-result.json`
+- `self-evaluation/REPRODUCIBILITY.md`
+
+Local verification:
+
+```bash
+python tools/validate_json.py schemas/reference-input-bundle.schema.json self-evaluation/kriterion-self-eval-bundle.json
+python tools/validate_json.py schemas/evaluation-result.schema.json self-evaluation/kriterion-self-eval-result.json
+python tools/verify_execution_chain.py --input self-evaluation/kriterion-self-eval-bundle.json --result self-evaluation/kriterion-self-eval-result.json
+python tools/reference_runner.py self-evaluation/kriterion-self-eval-bundle.json --output /tmp/kriterion-self-eval-result.repro.json
+diff -u self-evaluation/kriterion-self-eval-result.json /tmp/kriterion-self-eval-result.repro.json
+```
 
 ---
 
