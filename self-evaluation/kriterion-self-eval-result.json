@@ -1,0 +1,701 @@
+{
+  "protocol_metadata": {
+    "protocol_id": "GPT5.4-AUDIT-HARDENING-PROTOCOL-2026",
+    "protocol_version": "2026.2",
+    "target_protocol_id": "GPT5.4-AUDIT-HARDENING-PROTOCOL-2026",
+    "execution_mode": "MODE_STRICT_AUDIT",
+    "evaluation_timestamp": "1970-01-01T00:00:00Z",
+    "model_identifier": "adversarial-orchestration-v1",
+    "artifact_count": 6,
+    "evaluation_hash": "b88b377a094fcea33f023458bf4ec80f5e75ebbcbfaa40899c017ac0f246d033"
+  },
+  "artifact_validation_results": [
+    {
+      "artifact_id": "ART.KRITERION.PROTOCOL.CORE",
+      "schema_status": "VALID",
+      "integrity_status": "VALID",
+      "admissible": true,
+      "reason_codes": []
+    },
+    {
+      "artifact_id": "ART.KRITERION.RUNNER.REFERENCE",
+      "schema_status": "VALID",
+      "integrity_status": "VALID",
+      "admissible": true,
+      "reason_codes": []
+    },
+    {
+      "artifact_id": "ART.KRITERION.VERIFIER.CHAIN",
+      "schema_status": "VALID",
+      "integrity_status": "VALID",
+      "admissible": true,
+      "reason_codes": []
+    },
+    {
+      "artifact_id": "ART.KRITERION.SCHEMA.GOVERNANCE",
+      "schema_status": "VALID",
+      "integrity_status": "VALID",
+      "admissible": true,
+      "reason_codes": []
+    },
+    {
+      "artifact_id": "ART.KRITERION.TESTS.COVERAGE",
+      "schema_status": "VALID",
+      "integrity_status": "VALID",
+      "admissible": true,
+      "reason_codes": []
+    },
+    {
+      "artifact_id": "ART.KRITERION.SECURITY.GATES",
+      "schema_status": "VALID",
+      "integrity_status": "VALID",
+      "admissible": true,
+      "reason_codes": []
+    }
+  ],
+  "task_scores": [
+    {
+      "protocol_id": "GPT5.4-AUDIT-HARDENING-PROTOCOL-2026",
+      "domain_id": "KRITERION.PROTOCOL_INTEGRITY",
+      "task_id": "TASK.PI.001",
+      "task_weight": 100,
+      "evidence_artifact_ids": [
+        "ART.KRITERION.PROTOCOL.CORE",
+        "ART.KRITERION.SECURITY.GATES"
+      ],
+      "raw_score": 5.0,
+      "evidence_cap": 5.0,
+      "penalties_applied": [],
+      "final_score": 5.0,
+      "reason_codes": []
+    },
+    {
+      "protocol_id": "GPT5.4-AUDIT-HARDENING-PROTOCOL-2026",
+      "domain_id": "KRITERION.EXECUTION_DETERMINISM",
+      "task_id": "TASK.ED.001",
+      "task_weight": 100,
+      "evidence_artifact_ids": [
+        "ART.KRITERION.RUNNER.REFERENCE",
+        "ART.KRITERION.VERIFIER.CHAIN",
+        "ART.KRITERION.TESTS.COVERAGE"
+      ],
+      "raw_score": 5.0,
+      "evidence_cap": 5.0,
+      "penalties_applied": [],
+      "final_score": 5.0,
+      "reason_codes": []
+    },
+    {
+      "protocol_id": "GPT5.4-AUDIT-HARDENING-PROTOCOL-2026",
+      "domain_id": "KRITERION.SCHEMA_GOVERNANCE",
+      "task_id": "TASK.SG.001",
+      "task_weight": 100,
+      "evidence_artifact_ids": [
+        "ART.KRITERION.SCHEMA.GOVERNANCE",
+        "ART.KRITERION.TESTS.COVERAGE"
+      ],
+      "raw_score": 5.0,
+      "evidence_cap": 5.0,
+      "penalties_applied": [],
+      "final_score": 5.0,
+      "reason_codes": []
+    },
+    {
+      "protocol_id": "GPT5.4-AUDIT-HARDENING-PROTOCOL-2026",
+      "domain_id": "KRITERION.SECURITY_HARDENING",
+      "task_id": "TASK.SH.001",
+      "task_weight": 100,
+      "evidence_artifact_ids": [
+        "ART.KRITERION.SECURITY.GATES",
+        "ART.KRITERION.PROTOCOL.CORE",
+        "ART.KRITERION.VERIFIER.CHAIN"
+      ],
+      "raw_score": 5.0,
+      "evidence_cap": 5.0,
+      "penalties_applied": [],
+      "final_score": 5.0,
+      "reason_codes": []
+    }
+  ],
+  "domain_scores": [
+    {
+      "domain_id": "KRITERION.PROTOCOL_INTEGRITY",
+      "domain_name": "Protocol Integrity",
+      "must_have": true,
+      "weighted_score": 5.0,
+      "evidence_class_distribution": {
+        "LOW": 0,
+        "MED": 0,
+        "HIGH": 2
+      },
+      "domain_cap": 5.0,
+      "final_domain_score": 5.0
+    },
+    {
+      "domain_id": "KRITERION.EXECUTION_DETERMINISM",
+      "domain_name": "Execution Determinism",
+      "must_have": true,
+      "weighted_score": 5.0,
+      "evidence_class_distribution": {
+        "LOW": 0,
+        "MED": 1,
+        "HIGH": 2
+      },
+      "domain_cap": 5.0,
+      "final_domain_score": 5.0
+    },
+    {
+      "domain_id": "KRITERION.SCHEMA_GOVERNANCE",
+      "domain_name": "Schema Governance",
+      "must_have": true,
+      "weighted_score": 5.0,
+      "evidence_class_distribution": {
+        "LOW": 0,
+        "MED": 1,
+        "HIGH": 1
+      },
+      "domain_cap": 5.0,
+      "final_domain_score": 5.0
+    },
+    {
+      "domain_id": "KRITERION.SECURITY_HARDENING",
+      "domain_name": "Security Hardening",
+      "must_have": true,
+      "weighted_score": 5.0,
+      "evidence_class_distribution": {
+        "LOW": 0,
+        "MED": 0,
+        "HIGH": 3
+      },
+      "domain_cap": 5.0,
+      "final_domain_score": 5.0
+    }
+  ],
+  "gate_results": [
+    {
+      "gate_id": "G0_INTEGRITY",
+      "status": "PASS",
+      "blocking": false,
+      "reason_codes": [],
+      "affected_artifact_ids": []
+    },
+    {
+      "gate_id": "G1_MINIMUM_READINESS",
+      "status": "PASS",
+      "blocking": false,
+      "reason_codes": [],
+      "affected_artifact_ids": []
+    },
+    {
+      "gate_id": "G2_EVIDENCE_SUFFICIENCY",
+      "status": "PASS",
+      "blocking": false,
+      "reason_codes": [],
+      "affected_artifact_ids": []
+    }
+  ],
+  "final_classification": {
+    "status": "PASS",
+    "classification_label": "READY_HIGH_CONFIDENCE",
+    "composite_score": 5.0,
+    "integrity_hash": "b88b377a094fcea33f023458bf4ec80f5e75ebbcbfaa40899c017ac0f246d033"
+  },
+  "execution_chain_format_version": "execution_chain.v1",
+  "execution_state_chain": [
+    {
+      "phase_index": 0,
+      "phase_id": "artifact_validation",
+      "previous_step_hash": "6f6e3fa881a6bc7fa53d4cbeaaa6b53fa49cecf4ce003b37fafae7da52d86d96",
+      "step_hash": "18f23c81537c36a4660f341096545880233348b5064ccb155172b1abdc41514e",
+      "contract_version": "2026.2",
+      "phase_input_digest": "500c28437d6063399c7933eaf70d46743aa30bcdae05b0bacce5d2039795b9d3",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.KRITERION.PROTOCOL.CORE",
+          "ART.KRITERION.RUNNER.REFERENCE",
+          "ART.KRITERION.SCHEMA.GOVERNANCE",
+          "ART.KRITERION.SECURITY.GATES",
+          "ART.KRITERION.TESTS.COVERAGE",
+          "ART.KRITERION.VERIFIER.CHAIN"
+        ],
+        "admitted_artifact_fingerprints": [
+          "4b3456c2c7f6a9d021c77a2d4e61ac3fdd502a03364254cf2d6c968f82e6bdf0",
+          "535edfcb1fe46b12133e3d4e8f7634039764a2640a177f0029fb0479f2c7f11c",
+          "9488c9b0657e1c992fc27eb680b57a49cc262f6eb8d59f02f538c215f30d5fe1",
+          "cd85c8742394d0ce60a3c4398d9df3ca78f0f5a8ba32b0f9e10cbeaa62641298",
+          "e0243a5b82e629bc99021091f64ef71e6d33853743ff6b032aca404d4be50b59",
+          "e2788089688c392031cc362af411a58646fc30a5d8583c96808d5f995301d2fc"
+        ],
+        "gate_state": {
+          "G0_INTEGRITY": "PASS"
+        },
+        "phase_material": {
+          "artifact_validation_results": [
+            {
+              "artifact_id": "ART.KRITERION.PROTOCOL.CORE",
+              "schema_status": "VALID",
+              "integrity_status": "VALID",
+              "admissible": true,
+              "reason_codes": []
+            },
+            {
+              "artifact_id": "ART.KRITERION.RUNNER.REFERENCE",
+              "schema_status": "VALID",
+              "integrity_status": "VALID",
+              "admissible": true,
+              "reason_codes": []
+            },
+            {
+              "artifact_id": "ART.KRITERION.SCHEMA.GOVERNANCE",
+              "schema_status": "VALID",
+              "integrity_status": "VALID",
+              "admissible": true,
+              "reason_codes": []
+            },
+            {
+              "artifact_id": "ART.KRITERION.SECURITY.GATES",
+              "schema_status": "VALID",
+              "integrity_status": "VALID",
+              "admissible": true,
+              "reason_codes": []
+            },
+            {
+              "artifact_id": "ART.KRITERION.TESTS.COVERAGE",
+              "schema_status": "VALID",
+              "integrity_status": "VALID",
+              "admissible": true,
+              "reason_codes": []
+            },
+            {
+              "artifact_id": "ART.KRITERION.VERIFIER.CHAIN",
+              "schema_status": "VALID",
+              "integrity_status": "VALID",
+              "admissible": true,
+              "reason_codes": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "phase_index": 1,
+      "phase_id": "admissibility_derivation",
+      "previous_step_hash": "18f23c81537c36a4660f341096545880233348b5064ccb155172b1abdc41514e",
+      "step_hash": "776e5c38ca9fa91cc35a8df82e4b845f17f398ad92f95f81e17dffe7eb5d4d4e",
+      "contract_version": "2026.2",
+      "phase_input_digest": "f094bf461bcf78daaddb4c3570f1e19bfa20140880fe73803674ba15d30fb093",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.KRITERION.PROTOCOL.CORE",
+          "ART.KRITERION.RUNNER.REFERENCE",
+          "ART.KRITERION.SCHEMA.GOVERNANCE",
+          "ART.KRITERION.SECURITY.GATES",
+          "ART.KRITERION.TESTS.COVERAGE",
+          "ART.KRITERION.VERIFIER.CHAIN"
+        ],
+        "admitted_artifact_fingerprints": [
+          "4b3456c2c7f6a9d021c77a2d4e61ac3fdd502a03364254cf2d6c968f82e6bdf0",
+          "535edfcb1fe46b12133e3d4e8f7634039764a2640a177f0029fb0479f2c7f11c",
+          "9488c9b0657e1c992fc27eb680b57a49cc262f6eb8d59f02f538c215f30d5fe1",
+          "cd85c8742394d0ce60a3c4398d9df3ca78f0f5a8ba32b0f9e10cbeaa62641298",
+          "e0243a5b82e629bc99021091f64ef71e6d33853743ff6b032aca404d4be50b59",
+          "e2788089688c392031cc362af411a58646fc30a5d8583c96808d5f995301d2fc"
+        ],
+        "gate_state": {},
+        "phase_material": {
+          "admitted_artifact_ids": [
+            "ART.KRITERION.PROTOCOL.CORE",
+            "ART.KRITERION.RUNNER.REFERENCE",
+            "ART.KRITERION.SCHEMA.GOVERNANCE",
+            "ART.KRITERION.SECURITY.GATES",
+            "ART.KRITERION.TESTS.COVERAGE",
+            "ART.KRITERION.VERIFIER.CHAIN"
+          ],
+          "admitted_artifact_fingerprints": [
+            "4b3456c2c7f6a9d021c77a2d4e61ac3fdd502a03364254cf2d6c968f82e6bdf0",
+            "535edfcb1fe46b12133e3d4e8f7634039764a2640a177f0029fb0479f2c7f11c",
+            "9488c9b0657e1c992fc27eb680b57a49cc262f6eb8d59f02f538c215f30d5fe1",
+            "cd85c8742394d0ce60a3c4398d9df3ca78f0f5a8ba32b0f9e10cbeaa62641298",
+            "e0243a5b82e629bc99021091f64ef71e6d33853743ff6b032aca404d4be50b59",
+            "e2788089688c392031cc362af411a58646fc30a5d8583c96808d5f995301d2fc"
+          ]
+        }
+      }
+    },
+    {
+      "phase_index": 2,
+      "phase_id": "task_scoring",
+      "previous_step_hash": "776e5c38ca9fa91cc35a8df82e4b845f17f398ad92f95f81e17dffe7eb5d4d4e",
+      "step_hash": "7c8c2116ab9f60441cef04e06cb564d8748aa870b4e9a8962201d2ad72981096",
+      "contract_version": "2026.2",
+      "phase_input_digest": "b28b1f31b69e20bc39eea71a43afc358abff38ab259b5e157d628db4faf3cbcb",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.KRITERION.PROTOCOL.CORE",
+          "ART.KRITERION.RUNNER.REFERENCE",
+          "ART.KRITERION.SCHEMA.GOVERNANCE",
+          "ART.KRITERION.SECURITY.GATES",
+          "ART.KRITERION.TESTS.COVERAGE",
+          "ART.KRITERION.VERIFIER.CHAIN"
+        ],
+        "admitted_artifact_fingerprints": [
+          "4b3456c2c7f6a9d021c77a2d4e61ac3fdd502a03364254cf2d6c968f82e6bdf0",
+          "535edfcb1fe46b12133e3d4e8f7634039764a2640a177f0029fb0479f2c7f11c",
+          "9488c9b0657e1c992fc27eb680b57a49cc262f6eb8d59f02f538c215f30d5fe1",
+          "cd85c8742394d0ce60a3c4398d9df3ca78f0f5a8ba32b0f9e10cbeaa62641298",
+          "e0243a5b82e629bc99021091f64ef71e6d33853743ff6b032aca404d4be50b59",
+          "e2788089688c392031cc362af411a58646fc30a5d8583c96808d5f995301d2fc"
+        ],
+        "gate_state": {},
+        "phase_material": {
+          "task_scores": [
+            {
+              "domain_id": "KRITERION.EXECUTION_DETERMINISM",
+              "task_id": "TASK.ED.001",
+              "final_score": 5.0,
+              "evidence_artifact_ids": [
+                "ART.KRITERION.RUNNER.REFERENCE",
+                "ART.KRITERION.TESTS.COVERAGE",
+                "ART.KRITERION.VERIFIER.CHAIN"
+              ],
+              "reason_codes": []
+            },
+            {
+              "domain_id": "KRITERION.PROTOCOL_INTEGRITY",
+              "task_id": "TASK.PI.001",
+              "final_score": 5.0,
+              "evidence_artifact_ids": [
+                "ART.KRITERION.PROTOCOL.CORE",
+                "ART.KRITERION.SECURITY.GATES"
+              ],
+              "reason_codes": []
+            },
+            {
+              "domain_id": "KRITERION.SCHEMA_GOVERNANCE",
+              "task_id": "TASK.SG.001",
+              "final_score": 5.0,
+              "evidence_artifact_ids": [
+                "ART.KRITERION.SCHEMA.GOVERNANCE",
+                "ART.KRITERION.TESTS.COVERAGE"
+              ],
+              "reason_codes": []
+            },
+            {
+              "domain_id": "KRITERION.SECURITY_HARDENING",
+              "task_id": "TASK.SH.001",
+              "final_score": 5.0,
+              "evidence_artifact_ids": [
+                "ART.KRITERION.PROTOCOL.CORE",
+                "ART.KRITERION.SECURITY.GATES",
+                "ART.KRITERION.VERIFIER.CHAIN"
+              ],
+              "reason_codes": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "phase_index": 3,
+      "phase_id": "domain_scoring",
+      "previous_step_hash": "7c8c2116ab9f60441cef04e06cb564d8748aa870b4e9a8962201d2ad72981096",
+      "step_hash": "a27f0f5b82b9d69c9060a96a7a2ba00d5754a638dfead950b4d66d01ee977ea0",
+      "contract_version": "2026.2",
+      "phase_input_digest": "585e97117f01542875f2facf6c99ebd33b7d97dfd99d6211848349bcf82f77fe",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.KRITERION.PROTOCOL.CORE",
+          "ART.KRITERION.RUNNER.REFERENCE",
+          "ART.KRITERION.SCHEMA.GOVERNANCE",
+          "ART.KRITERION.SECURITY.GATES",
+          "ART.KRITERION.TESTS.COVERAGE",
+          "ART.KRITERION.VERIFIER.CHAIN"
+        ],
+        "admitted_artifact_fingerprints": [
+          "4b3456c2c7f6a9d021c77a2d4e61ac3fdd502a03364254cf2d6c968f82e6bdf0",
+          "535edfcb1fe46b12133e3d4e8f7634039764a2640a177f0029fb0479f2c7f11c",
+          "9488c9b0657e1c992fc27eb680b57a49cc262f6eb8d59f02f538c215f30d5fe1",
+          "cd85c8742394d0ce60a3c4398d9df3ca78f0f5a8ba32b0f9e10cbeaa62641298",
+          "e0243a5b82e629bc99021091f64ef71e6d33853743ff6b032aca404d4be50b59",
+          "e2788089688c392031cc362af411a58646fc30a5d8583c96808d5f995301d2fc"
+        ],
+        "gate_state": {},
+        "phase_material": {
+          "domain_scores": [
+            {
+              "domain_id": "KRITERION.EXECUTION_DETERMINISM",
+              "final_domain_score": 5.0,
+              "domain_cap": 5.0,
+              "evidence_class_distribution": {
+                "LOW": 0,
+                "MED": 1,
+                "HIGH": 2
+              }
+            },
+            {
+              "domain_id": "KRITERION.PROTOCOL_INTEGRITY",
+              "final_domain_score": 5.0,
+              "domain_cap": 5.0,
+              "evidence_class_distribution": {
+                "LOW": 0,
+                "MED": 0,
+                "HIGH": 2
+              }
+            },
+            {
+              "domain_id": "KRITERION.SCHEMA_GOVERNANCE",
+              "final_domain_score": 5.0,
+              "domain_cap": 5.0,
+              "evidence_class_distribution": {
+                "LOW": 0,
+                "MED": 1,
+                "HIGH": 1
+              }
+            },
+            {
+              "domain_id": "KRITERION.SECURITY_HARDENING",
+              "final_domain_score": 5.0,
+              "domain_cap": 5.0,
+              "evidence_class_distribution": {
+                "LOW": 0,
+                "MED": 0,
+                "HIGH": 3
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "phase_index": 4,
+      "phase_id": "gate_evaluation",
+      "previous_step_hash": "a27f0f5b82b9d69c9060a96a7a2ba00d5754a638dfead950b4d66d01ee977ea0",
+      "step_hash": "53babc1dc7bacab99a329ff5258648feef60239bed05870add99dac07cd5ec50",
+      "contract_version": "2026.2",
+      "phase_input_digest": "6af965d3abe2fa32f8c0bb93db5e334a3be952fce17a55eb16566fb56f374d18",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.KRITERION.PROTOCOL.CORE",
+          "ART.KRITERION.RUNNER.REFERENCE",
+          "ART.KRITERION.SCHEMA.GOVERNANCE",
+          "ART.KRITERION.SECURITY.GATES",
+          "ART.KRITERION.TESTS.COVERAGE",
+          "ART.KRITERION.VERIFIER.CHAIN"
+        ],
+        "admitted_artifact_fingerprints": [
+          "4b3456c2c7f6a9d021c77a2d4e61ac3fdd502a03364254cf2d6c968f82e6bdf0",
+          "535edfcb1fe46b12133e3d4e8f7634039764a2640a177f0029fb0479f2c7f11c",
+          "9488c9b0657e1c992fc27eb680b57a49cc262f6eb8d59f02f538c215f30d5fe1",
+          "cd85c8742394d0ce60a3c4398d9df3ca78f0f5a8ba32b0f9e10cbeaa62641298",
+          "e0243a5b82e629bc99021091f64ef71e6d33853743ff6b032aca404d4be50b59",
+          "e2788089688c392031cc362af411a58646fc30a5d8583c96808d5f995301d2fc"
+        ],
+        "gate_state": {
+          "G0_INTEGRITY": "PASS",
+          "G1_MINIMUM_READINESS": "PASS",
+          "G2_EVIDENCE_SUFFICIENCY": "PASS"
+        },
+        "phase_material": {
+          "gate_results": [
+            {
+              "gate_id": "G0_INTEGRITY",
+              "status": "PASS",
+              "blocking": false
+            },
+            {
+              "gate_id": "G1_MINIMUM_READINESS",
+              "status": "PASS",
+              "blocking": false
+            },
+            {
+              "gate_id": "G2_EVIDENCE_SUFFICIENCY",
+              "status": "PASS",
+              "blocking": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "phase_index": 5,
+      "phase_id": "classification",
+      "previous_step_hash": "53babc1dc7bacab99a329ff5258648feef60239bed05870add99dac07cd5ec50",
+      "step_hash": "386730bf653dd500c7d7dd8eb18bf5e42d2c34e5b6b95324832867aa9014a625",
+      "contract_version": "2026.2",
+      "phase_input_digest": "82d393e34ede52822bba161ebf8a12882ad4e40634fa5d1b54c988cc55c1028f",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.KRITERION.PROTOCOL.CORE",
+          "ART.KRITERION.RUNNER.REFERENCE",
+          "ART.KRITERION.SCHEMA.GOVERNANCE",
+          "ART.KRITERION.SECURITY.GATES",
+          "ART.KRITERION.TESTS.COVERAGE",
+          "ART.KRITERION.VERIFIER.CHAIN"
+        ],
+        "admitted_artifact_fingerprints": [
+          "4b3456c2c7f6a9d021c77a2d4e61ac3fdd502a03364254cf2d6c968f82e6bdf0",
+          "535edfcb1fe46b12133e3d4e8f7634039764a2640a177f0029fb0479f2c7f11c",
+          "9488c9b0657e1c992fc27eb680b57a49cc262f6eb8d59f02f538c215f30d5fe1",
+          "cd85c8742394d0ce60a3c4398d9df3ca78f0f5a8ba32b0f9e10cbeaa62641298",
+          "e0243a5b82e629bc99021091f64ef71e6d33853743ff6b032aca404d4be50b59",
+          "e2788089688c392031cc362af411a58646fc30a5d8583c96808d5f995301d2fc"
+        ],
+        "gate_state": {
+          "G0_INTEGRITY": "PASS",
+          "G1_MINIMUM_READINESS": "PASS",
+          "G2_EVIDENCE_SUFFICIENCY": "PASS"
+        },
+        "phase_material": {
+          "classification": {
+            "status": "PASS",
+            "classification_label": "READY_HIGH_CONFIDENCE",
+            "composite_score": 5.0
+          }
+        }
+      }
+    },
+    {
+      "phase_index": 6,
+      "phase_id": "finalization",
+      "previous_step_hash": "386730bf653dd500c7d7dd8eb18bf5e42d2c34e5b6b95324832867aa9014a625",
+      "step_hash": "b88b377a094fcea33f023458bf4ec80f5e75ebbcbfaa40899c017ac0f246d033",
+      "contract_version": "2026.2",
+      "phase_input_digest": "f4a44c7d963369235a71d474ccc25b8f56c7b6662aa1ecebeb98d1792c88dd47",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.KRITERION.PROTOCOL.CORE",
+          "ART.KRITERION.RUNNER.REFERENCE",
+          "ART.KRITERION.SCHEMA.GOVERNANCE",
+          "ART.KRITERION.SECURITY.GATES",
+          "ART.KRITERION.TESTS.COVERAGE",
+          "ART.KRITERION.VERIFIER.CHAIN"
+        ],
+        "admitted_artifact_fingerprints": [
+          "4b3456c2c7f6a9d021c77a2d4e61ac3fdd502a03364254cf2d6c968f82e6bdf0",
+          "535edfcb1fe46b12133e3d4e8f7634039764a2640a177f0029fb0479f2c7f11c",
+          "9488c9b0657e1c992fc27eb680b57a49cc262f6eb8d59f02f538c215f30d5fe1",
+          "cd85c8742394d0ce60a3c4398d9df3ca78f0f5a8ba32b0f9e10cbeaa62641298",
+          "e0243a5b82e629bc99021091f64ef71e6d33853743ff6b032aca404d4be50b59",
+          "e2788089688c392031cc362af411a58646fc30a5d8583c96808d5f995301d2fc"
+        ],
+        "gate_state": {
+          "G0_INTEGRITY": "PASS",
+          "G1_MINIMUM_READINESS": "PASS",
+          "G2_EVIDENCE_SUFFICIENCY": "PASS"
+        },
+        "phase_material": {
+          "finalization": {
+            "target_protocol_id": "GPT5.4-AUDIT-HARDENING-PROTOCOL-2026",
+            "execution_mode": "MODE_STRICT_AUDIT",
+            "evaluation_timestamp": "1970-01-01T00:00:00Z",
+            "artifact_count": 6,
+            "evidence_trace_digest": "8695aefe394fe3bf60f3588152f397057fbba249fdaeda64dfacd3b2d826743f"
+          }
+        }
+      }
+    }
+  ],
+  "execution_chain_terminal_hash": "b88b377a094fcea33f023458bf4ec80f5e75ebbcbfaa40899c017ac0f246d033",
+  "evidence_trace_table": [
+    {
+      "artifact_id": "ART.KRITERION.PROTOCOL.CORE",
+      "artifact_type": "POLICY",
+      "domain_id": "KRITERION.PROTOCOL_INTEGRITY",
+      "task_id": "TASK.PI.001",
+      "task_score_contribution": 5.0,
+      "domain_score_contribution": 5.0,
+      "evidence_class": "HIGH",
+      "trace_status": "USED"
+    },
+    {
+      "artifact_id": "ART.KRITERION.SECURITY.GATES",
+      "artifact_type": "THREAT_MODEL",
+      "domain_id": "KRITERION.PROTOCOL_INTEGRITY",
+      "task_id": "TASK.PI.001",
+      "task_score_contribution": 5.0,
+      "domain_score_contribution": 5.0,
+      "evidence_class": "HIGH",
+      "trace_status": "USED"
+    },
+    {
+      "artifact_id": "ART.KRITERION.RUNNER.REFERENCE",
+      "artifact_type": "PIPELINE_OUTPUT",
+      "domain_id": "KRITERION.EXECUTION_DETERMINISM",
+      "task_id": "TASK.ED.001",
+      "task_score_contribution": 5.0,
+      "domain_score_contribution": 5.0,
+      "evidence_class": "HIGH",
+      "trace_status": "USED"
+    },
+    {
+      "artifact_id": "ART.KRITERION.VERIFIER.CHAIN",
+      "artifact_type": "PIPELINE_OUTPUT",
+      "domain_id": "KRITERION.EXECUTION_DETERMINISM",
+      "task_id": "TASK.ED.001",
+      "task_score_contribution": 5.0,
+      "domain_score_contribution": 5.0,
+      "evidence_class": "HIGH",
+      "trace_status": "USED"
+    },
+    {
+      "artifact_id": "ART.KRITERION.TESTS.COVERAGE",
+      "artifact_type": "TEST_REPORT",
+      "domain_id": "KRITERION.EXECUTION_DETERMINISM",
+      "task_id": "TASK.ED.001",
+      "task_score_contribution": 5.0,
+      "domain_score_contribution": 5.0,
+      "evidence_class": "MED",
+      "trace_status": "USED"
+    },
+    {
+      "artifact_id": "ART.KRITERION.SCHEMA.GOVERNANCE",
+      "artifact_type": "CONFIG",
+      "domain_id": "KRITERION.SCHEMA_GOVERNANCE",
+      "task_id": "TASK.SG.001",
+      "task_score_contribution": 5.0,
+      "domain_score_contribution": 5.0,
+      "evidence_class": "HIGH",
+      "trace_status": "USED"
+    },
+    {
+      "artifact_id": "ART.KRITERION.TESTS.COVERAGE",
+      "artifact_type": "TEST_REPORT",
+      "domain_id": "KRITERION.SCHEMA_GOVERNANCE",
+      "task_id": "TASK.SG.001",
+      "task_score_contribution": 5.0,
+      "domain_score_contribution": 5.0,
+      "evidence_class": "MED",
+      "trace_status": "USED"
+    },
+    {
+      "artifact_id": "ART.KRITERION.SECURITY.GATES",
+      "artifact_type": "THREAT_MODEL",
+      "domain_id": "KRITERION.SECURITY_HARDENING",
+      "task_id": "TASK.SH.001",
+      "task_score_contribution": 5.0,
+      "domain_score_contribution": 5.0,
+      "evidence_class": "HIGH",
+      "trace_status": "USED"
+    },
+    {
+      "artifact_id": "ART.KRITERION.PROTOCOL.CORE",
+      "artifact_type": "POLICY",
+      "domain_id": "KRITERION.SECURITY_HARDENING",
+      "task_id": "TASK.SH.001",
+      "task_score_contribution": 5.0,
+      "domain_score_contribution": 5.0,
+      "evidence_class": "HIGH",
+      "trace_status": "USED"
+    },
+    {
+      "artifact_id": "ART.KRITERION.VERIFIER.CHAIN",
+      "artifact_type": "PIPELINE_OUTPUT",
+      "domain_id": "KRITERION.SECURITY_HARDENING",
+      "task_id": "TASK.SH.001",
+      "task_score_contribution": 5.0,
+      "domain_score_contribution": 5.0,
+      "evidence_class": "HIGH",
+      "trace_status": "USED"
+    }
+  ]
+}

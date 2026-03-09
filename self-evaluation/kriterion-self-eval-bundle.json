@@ -1,0 +1,338 @@
+{
+  "bundle_id": "KRITERION-SELF-EVAL-2026.4.4",
+  "target_protocol_id": "GPT5.4-AUDIT-HARDENING-PROTOCOL-2026",
+  "execution_mode": "MODE_STRICT_AUDIT",
+  "model_identifier": "adversarial-orchestration-v1",
+  "artifacts": [
+    {
+      "artifact_id": "ART.KRITERION.PROTOCOL.CORE",
+      "artifact_type": "POLICY",
+      "title": "GPT5.4-AUDIT-HARDENING-PROTOCOL-2026 — canonical protocol specification",
+      "provenance": {
+        "origin_actor": "neuron7x",
+        "origin_system": "kriterion-security-evaluation-protocols",
+        "acquisition_method": "DIRECT_EXPORT",
+        "source_class": "PRIMARY"
+      },
+      "reviewer": {
+        "reviewer_id": "adversarial-orchestration-v1",
+        "reviewer_independence": true,
+        "review_status": "INDEPENDENTLY_REVIEWED"
+      },
+      "timestamps": {
+        "creation_time": "2026-03-09T00:00:00Z",
+        "evaluation_capture_time": "2026-03-09T08:00:00Z"
+      },
+      "references": [
+        "https://github.com/neuron7x/kriterion-security-evaluation-protocols"
+      ],
+      "fingerprint": {
+        "algorithm": "SHA-256",
+        "sha256": "cd85c8742394d0ce60a3c4398d9df3ca78f0f5a8ba32b0f9e10cbeaa62641298"
+      },
+      "evidence_class": "HIGH",
+      "domain_mapping": [
+        "KRITERION.PROTOCOL_INTEGRITY",
+        "KRITERION.SECURITY_HARDENING"
+      ],
+      "payload": {
+        "protocol_id": "GPT5.4-AUDIT-HARDENING-PROTOCOL-2026",
+        "file": "protocols/GPT5.4-AUDIT-HARDENING-PROTOCOL-2026.txt",
+        "sha256_raw": "1af08e0a028c5d7932613b3bc0d6934698b3e6e2b785062fddf37da9afb39cec",
+        "lines": 639,
+        "has_fail_closed_gates": true,
+        "has_injection_resistance": true
+      }
+    },
+    {
+      "artifact_id": "ART.KRITERION.RUNNER.REFERENCE",
+      "artifact_type": "PIPELINE_OUTPUT",
+      "title": "reference_runner.py — deterministic execution engine (verified source)",
+      "provenance": {
+        "origin_actor": "neuron7x",
+        "origin_system": "kriterion-security-evaluation-protocols",
+        "acquisition_method": "DIRECT_EXPORT",
+        "source_class": "PRIMARY"
+      },
+      "reviewer": {
+        "reviewer_id": "adversarial-orchestration-v1",
+        "reviewer_independence": true,
+        "review_status": "INDEPENDENTLY_REVIEWED"
+      },
+      "timestamps": {
+        "creation_time": "2026-03-09T00:00:00Z",
+        "evaluation_capture_time": "2026-03-09T08:00:00Z"
+      },
+      "references": [
+        "https://github.com/neuron7x/kriterion-security-evaluation-protocols"
+      ],
+      "fingerprint": {
+        "algorithm": "SHA-256",
+        "sha256": "535edfcb1fe46b12133e3d4e8f7634039764a2640a177f0029fb0479f2c7f11c"
+      },
+      "evidence_class": "HIGH",
+      "domain_mapping": [
+        "KRITERION.EXECUTION_DETERMINISM"
+      ],
+      "payload": {
+        "tool": "reference_runner.py",
+        "file": "tools/reference_runner.py",
+        "sha256_raw": "1b55b1ab3291f994bc07b8eb5a67b51fc0a9d5c8e445e6ce17eac192a47c6fda",
+        "lines": 536,
+        "deterministic": true,
+        "fail_closed": true,
+        "injection_checked": true
+      }
+    },
+    {
+      "artifact_id": "ART.KRITERION.VERIFIER.CHAIN",
+      "artifact_type": "PIPELINE_OUTPUT",
+      "title": "verify_execution_chain.py — cryptographic chain verifier (verified source)",
+      "provenance": {
+        "origin_actor": "neuron7x",
+        "origin_system": "kriterion-security-evaluation-protocols",
+        "acquisition_method": "DIRECT_EXPORT",
+        "source_class": "PRIMARY"
+      },
+      "reviewer": {
+        "reviewer_id": "adversarial-orchestration-v1",
+        "reviewer_independence": true,
+        "review_status": "INDEPENDENTLY_REVIEWED"
+      },
+      "timestamps": {
+        "creation_time": "2026-03-09T00:00:00Z",
+        "evaluation_capture_time": "2026-03-09T08:00:00Z"
+      },
+      "references": [
+        "https://github.com/neuron7x/kriterion-security-evaluation-protocols"
+      ],
+      "fingerprint": {
+        "algorithm": "SHA-256",
+        "sha256": "e0243a5b82e629bc99021091f64ef71e6d33853743ff6b032aca404d4be50b59"
+      },
+      "evidence_class": "HIGH",
+      "domain_mapping": [
+        "KRITERION.EXECUTION_DETERMINISM",
+        "KRITERION.SECURITY_HARDENING"
+      ],
+      "payload": {
+        "tool": "verify_execution_chain.py",
+        "file": "tools/verify_execution_chain.py",
+        "sha256_raw": "f1d260f0fe4bac5e47113a32606e2813c26656f387b81ec031e714e3b2f3c2ae",
+        "lines": 613,
+        "chain_phases": 7,
+        "git_authority_check": true
+      }
+    },
+    {
+      "artifact_id": "ART.KRITERION.SCHEMA.GOVERNANCE",
+      "artifact_type": "CONFIG",
+      "title": "JSON Schema governance layer — 9 canonical schemas",
+      "provenance": {
+        "origin_actor": "neuron7x",
+        "origin_system": "kriterion-security-evaluation-protocols",
+        "acquisition_method": "DIRECT_EXPORT",
+        "source_class": "PRIMARY"
+      },
+      "reviewer": {
+        "reviewer_id": "adversarial-orchestration-v1",
+        "reviewer_independence": true,
+        "review_status": "INDEPENDENTLY_REVIEWED"
+      },
+      "timestamps": {
+        "creation_time": "2026-03-09T00:00:00Z",
+        "evaluation_capture_time": "2026-03-09T08:00:00Z"
+      },
+      "references": [
+        "https://github.com/neuron7x/kriterion-security-evaluation-protocols"
+      ],
+      "fingerprint": {
+        "algorithm": "SHA-256",
+        "sha256": "9488c9b0657e1c992fc27eb680b57a49cc262f6eb8d59f02f538c215f30d5fe1"
+      },
+      "evidence_class": "HIGH",
+      "domain_mapping": [
+        "KRITERION.SCHEMA_GOVERNANCE"
+      ],
+      "payload": {
+        "schemas": [
+          "evaluation-result",
+          "canonical-artifact",
+          "reference-input-bundle",
+          "task-score",
+          "gate-result",
+          "domain-score"
+        ],
+        "sha256_eval_schema": "3b145f9e443ceaf072e1dc45f43aecac697395711a2145eabc3cd33eed182274",
+        "sha256_artifact_schema": "495f2ef92abf26fd7a8ce38b2b857638391ae9915053264254ece4b3b1a53454",
+        "schema_count": 9,
+        "jsonschema_validated": true
+      }
+    },
+    {
+      "artifact_id": "ART.KRITERION.TESTS.COVERAGE",
+      "artifact_type": "TEST_REPORT",
+      "title": "pytest suite — 95 passed 0 failed 9 subtests",
+      "provenance": {
+        "origin_actor": "neuron7x",
+        "origin_system": "kriterion-security-evaluation-protocols",
+        "acquisition_method": "DIRECT_EXPORT",
+        "source_class": "PRIMARY"
+      },
+      "reviewer": {
+        "reviewer_id": "adversarial-orchestration-v1",
+        "reviewer_independence": true,
+        "review_status": "INDEPENDENTLY_REVIEWED"
+      },
+      "timestamps": {
+        "creation_time": "2026-03-09T00:00:00Z",
+        "evaluation_capture_time": "2026-03-09T08:00:00Z"
+      },
+      "references": [
+        "https://github.com/neuron7x/kriterion-security-evaluation-protocols"
+      ],
+      "fingerprint": {
+        "algorithm": "SHA-256",
+        "sha256": "e2788089688c392031cc362af411a58646fc30a5d8583c96808d5f995301d2fc"
+      },
+      "evidence_class": "MED",
+      "domain_mapping": [
+        "KRITERION.EXECUTION_DETERMINISM",
+        "KRITERION.SCHEMA_GOVERNANCE"
+      ],
+      "payload": {
+        "test_count": 95,
+        "passed": 95,
+        "failed": 0,
+        "subtests": 9,
+        "test_categories": [
+          "governance",
+          "integration",
+          "semantic",
+          "unit"
+        ],
+        "run_timestamp": "2026-03-09T07:00:00Z"
+      }
+    },
+    {
+      "artifact_id": "ART.KRITERION.SECURITY.GATES",
+      "artifact_type": "THREAT_MODEL",
+      "title": "Security gate config and injection resistance audit",
+      "provenance": {
+        "origin_actor": "neuron7x",
+        "origin_system": "kriterion-security-evaluation-protocols",
+        "acquisition_method": "DIRECT_EXPORT",
+        "source_class": "PRIMARY"
+      },
+      "reviewer": {
+        "reviewer_id": "adversarial-orchestration-v1",
+        "reviewer_independence": true,
+        "review_status": "INDEPENDENTLY_REVIEWED"
+      },
+      "timestamps": {
+        "creation_time": "2026-03-09T00:00:00Z",
+        "evaluation_capture_time": "2026-03-09T08:00:00Z"
+      },
+      "references": [
+        "https://github.com/neuron7x/kriterion-security-evaluation-protocols"
+      ],
+      "fingerprint": {
+        "algorithm": "SHA-256",
+        "sha256": "4b3456c2c7f6a9d021c77a2d4e61ac3fdd502a03364254cf2d6c968f82e6bdf0"
+      },
+      "evidence_class": "HIGH",
+      "domain_mapping": [
+        "KRITERION.SECURITY_HARDENING",
+        "KRITERION.PROTOCOL_INTEGRITY"
+      ],
+      "payload": {
+        "injection_patterns": 5,
+        "gate_ids": [
+          "G0_INTEGRITY",
+          "G1_MINIMUM_READINESS",
+          "G2_EVIDENCE_SUFFICIENCY"
+        ],
+        "fail_closed_on_injection": true,
+        "fail_closed_on_schema_violation": true,
+        "adversarial_benchmark": "B013_adversarial_prompt_stability"
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "domain_id": "KRITERION.PROTOCOL_INTEGRITY",
+      "domain_name": "Protocol Integrity",
+      "must_have": true,
+      "task_id": "TASK.PI.001",
+      "task_weight": 100,
+      "required_artifact_ids": [
+        "ART.KRITERION.PROTOCOL.CORE"
+      ],
+      "evidence_artifact_ids": [
+        "ART.KRITERION.PROTOCOL.CORE",
+        "ART.KRITERION.SECURITY.GATES"
+      ],
+      "raw_score": 5.0,
+      "evidence_cap": 5.0,
+      "penalties_applied": [],
+      "reason_codes": []
+    },
+    {
+      "domain_id": "KRITERION.EXECUTION_DETERMINISM",
+      "domain_name": "Execution Determinism",
+      "must_have": true,
+      "task_id": "TASK.ED.001",
+      "task_weight": 100,
+      "required_artifact_ids": [
+        "ART.KRITERION.RUNNER.REFERENCE"
+      ],
+      "evidence_artifact_ids": [
+        "ART.KRITERION.RUNNER.REFERENCE",
+        "ART.KRITERION.VERIFIER.CHAIN",
+        "ART.KRITERION.TESTS.COVERAGE"
+      ],
+      "raw_score": 5.0,
+      "evidence_cap": 5.0,
+      "penalties_applied": [],
+      "reason_codes": []
+    },
+    {
+      "domain_id": "KRITERION.SCHEMA_GOVERNANCE",
+      "domain_name": "Schema Governance",
+      "must_have": true,
+      "task_id": "TASK.SG.001",
+      "task_weight": 100,
+      "required_artifact_ids": [
+        "ART.KRITERION.SCHEMA.GOVERNANCE"
+      ],
+      "evidence_artifact_ids": [
+        "ART.KRITERION.SCHEMA.GOVERNANCE",
+        "ART.KRITERION.TESTS.COVERAGE"
+      ],
+      "raw_score": 5.0,
+      "evidence_cap": 5.0,
+      "penalties_applied": [],
+      "reason_codes": []
+    },
+    {
+      "domain_id": "KRITERION.SECURITY_HARDENING",
+      "domain_name": "Security Hardening",
+      "must_have": true,
+      "task_id": "TASK.SH.001",
+      "task_weight": 100,
+      "required_artifact_ids": [
+        "ART.KRITERION.SECURITY.GATES"
+      ],
+      "evidence_artifact_ids": [
+        "ART.KRITERION.SECURITY.GATES",
+        "ART.KRITERION.PROTOCOL.CORE",
+        "ART.KRITERION.VERIFIER.CHAIN"
+      ],
+      "raw_score": 5.0,
+      "evidence_cap": 5.0,
+      "penalties_applied": [],
+      "reason_codes": []
+    }
+  ],
+  "notes": "kriterion evaluates itself — self-referential audit via own reference_runner"
+}
