@@ -1,0 +1,682 @@
+{
+  "policy_version": "2026.24.0",
+  "governance_contract_changelog": "docs/GOVERNANCE_CONTRACT_CHANGELOG.md",
+  "authority_model": {
+    "MACHINE_VERIFIED": "Deterministic hard gate; non-zero exit blocks merge.",
+    "MACHINE_ASSISTED": "Machine-checked hygiene model that improves review quality but is not correctness proof alone.",
+    "HUMAN_REVIEW_ONLY": "Human constitutional judgment; cannot be fully automated."
+  },
+  "failure_mode_vocabulary": {
+    "FM_MANIFEST_DRIFT": "Repository tree drifts from MANIFEST hashes.",
+    "FM_SCHEMA_REGRESSION": "Schema acceptance/rejection semantics regress.",
+    "FM_NONDETERMINISTIC_HASH": "Canonical hashing output becomes unstable.",
+    "FM_RUNNER_EXECUTION_DRIFT": "Worked example execution path regresses.",
+    "FM_FAIL_CLOSED_REGRESSION": "Missing evidence fails to fail-closed.",
+    "FM_GATE_ID_DRIFT": "Gate IDs drift from canonical contract.",
+    "FM_BENCHMARK_OVERCLAIM": "Benchmark claims exceed demo-only reality.",
+    "FM_ENTRYPOINT_BREAKAGE": "Core tool entrypoints no longer invoke.",
+    "FM_SYNTAX_BREAKAGE": "Syntax/import breakage in tools/benchmark scripts.",
+    "FM_INTERNAL_LINK_BREAKAGE": "Internal links/anchors resolve incorrectly.",
+    "FM_EXTERNAL_LINK_BREAKAGE": "External reachability indicates broken public references.",
+    "FM_PAGES_SURFACE_BREAKAGE": "Published HTML surface is structurally broken.",
+    "FM_ARTIFACT_PROVENANCE_DRIFT": "CI evidence artifacts lack canonical names/checksums/provenance.",
+    "FM_DOCTRINE_DRIFT": "Governance doctrine drifts from policy constraints.",
+    "FM_POLICY_DOC_DRIFT": "Checklist/docs diverge from canonical governance contract.",
+    "FM_GOVERNANCE_REGRESSION": "Validator behavior drifts without regression guardrails.",
+    "FM_DEPENDENCY_HERMETICITY": "Dependency policy is non-deterministic or lockfile drifts.",
+    "FM_UNDECLARED_DEPENDENCY": "Governance tools import undeclared hidden dependencies.",
+    "FM_CLI_CONTRACT_DRIFT": "Governance-critical CLI entrypoints drift from expected contract.",
+    "FM_REQUIRED_CHECK_MAPPING_DRIFT": "Required-check to workflow-job mapping drifts from canonical immutable contract.",
+    "FM_GITHUB_SETTINGS_BASELINE_DRIFT": "Declared external GitHub settings baseline drifts from enforced governance contract.",
+    "FM_POST_MERGE_OPS_DRIFT": "Post-merge GitHub operations drift from repository governance assumptions.",
+    "FM_POLICY_DRIFT_REVIEW_MISSING": "Policy-drift review section is missing for governance-critical changes.",
+    "FM_WORKFLOW_PRIVILEGE_ESCALATION": "Workflow permissions/triggers/escalation surfaces violate trust model.",
+    "FM_MANIFEST_INVENTORY_UNTRUTHFUL": "MANIFEST inventory is incomplete, manipulated, or includes forbidden artifacts.",
+    "FM_REPO_MAP_UNTRUTHFUL": "repo-map inventory is incomplete, stale, or unauthorized.",
+    "FM_CODEOWNERS_DILUTION": "CODEOWNERS rules are diluted by broad later patterns.",
+    "FM_PR_TEMPLATE_WEAKENING": "PR template structure/content quality is weakened or placeholder-only.",
+    "FM_LOCAL_BASELINE_DRIFT": "Canonical local baseline parity drifts from CI/checklist surfaces.",
+    "FM_GOVERNANCE_ARTIFACT_NONDETERMINISM": "Tracked governance artifacts are generated nondeterministically.",
+    "FM_ONE_PR_DOCTRINE_WEAKENING": "Auto-generated PR mechanisms or maintenance bots can bypass one-PR doctrine.",
+    "FM_JOB_WEAKENING": "Critical CI jobs are silently weakened (strictness, retention, tolerating failures).",
+    "FM_DOCUMENTATION_UNTRUTHFUL": "Governance docs claim enforcement beyond repo-native capability.",
+    "FM_PR_INTAKE_QUALITY": "Pull request intake quality is empty/formal for mandatory governance sections.",
+    "FM_EXECUTION_CHAIN_VERIFICATION_DRIFT": "Independent execution-chain recomputation no longer matches emitted chain claims.",
+    "FM_GIT_AUTHORITY_EXECUTION_DRIFT": "Execution verification paths allow non-authoritative Git state or fallback."
+  },
+  "invariants": [
+    {
+      "invariant_id": "INV_MANIFEST_TREE_MATCH",
+      "domain_class": "integrity",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "artifact_integrity_claim",
+      "minimum_evidence_requirement": "Manifest integrity verification command exits successfully.",
+      "enforcer": "python tools/verify_manifest.py MANIFEST.json .",
+      "local_command_id": "manifest-integrity",
+      "local_command": "python tools/verify_manifest.py MANIFEST.json .",
+      "ci_job_id": "inv-manifest-integrity",
+      "blocked_failure_mode_codes": [
+        "FM_MANIFEST_DRIFT"
+      ],
+      "what_is_not_verified": [
+        "Does not prove semantic quality."
+      ]
+    },
+    {
+      "invariant_id": "INV_VALID_CANONICAL_ARTIFACT_ACCEPTED",
+      "domain_class": "validity",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "schema_validity_claim",
+      "minimum_evidence_requirement": "Valid canonical artifact fixture is accepted.",
+      "enforcer": "python tools/validate_json.py schemas/canonical-artifact.schema.json tests/fixtures/artifact.valid.json",
+      "local_command_id": "schema-valid-acceptance",
+      "local_command": "python tools/validate_json.py schemas/canonical-artifact.schema.json tests/fixtures/artifact.valid.json",
+      "ci_job_id": "inv-schema-valid-acceptance",
+      "blocked_failure_mode_codes": [
+        "FM_SCHEMA_REGRESSION"
+      ],
+      "what_is_not_verified": [
+        "Does not validate production payload diversity."
+      ]
+    },
+    {
+      "invariant_id": "INV_INVALID_CANONICAL_ARTIFACT_REJECTED",
+      "domain_class": "validity",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "schema_validity_claim",
+      "minimum_evidence_requirement": "Invalid canonical artifact fixture is rejected.",
+      "enforcer": "python tools/validate_json.py schemas/canonical-artifact.schema.json tests/fixtures/artifact.invalid.missing-valid-fingerprint.json",
+      "local_command_id": "schema-invalid-rejection",
+      "local_command": "python tools/validate_json.py schemas/canonical-artifact.schema.json tests/fixtures/artifact.invalid.missing-valid-fingerprint.json",
+      "ci_job_id": "inv-schema-invalid-rejection",
+      "blocked_failure_mode_codes": [
+        "FM_SCHEMA_REGRESSION"
+      ],
+      "what_is_not_verified": [
+        "Does not validate production payload diversity."
+      ]
+    },
+    {
+      "invariant_id": "INV_VALID_EVALUATION_RESULT_ACCEPTED",
+      "domain_class": "validity",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "schema_validity_claim",
+      "minimum_evidence_requirement": "Valid evaluation-result fixture is accepted.",
+      "enforcer": "python tools/validate_json.py schemas/evaluation-result.schema.json tests/fixtures/evaluation-result.valid.json",
+      "local_command_id": "schema-valid-evaluation-acceptance",
+      "local_command": "python tools/validate_json.py schemas/evaluation-result.schema.json tests/fixtures/evaluation-result.valid.json",
+      "ci_job_id": "inv-schema-valid-acceptance",
+      "blocked_failure_mode_codes": [
+        "FM_SCHEMA_REGRESSION"
+      ],
+      "what_is_not_verified": [
+        "Does not validate production payload diversity."
+      ]
+    },
+    {
+      "invariant_id": "INV_INVALID_EVALUATION_RESULT_REJECTED",
+      "domain_class": "validity",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "schema_validity_claim",
+      "minimum_evidence_requirement": "Invalid evaluation-result fixture is rejected.",
+      "enforcer": "python tools/validate_json.py schemas/evaluation-result.schema.json tests/fixtures/evaluation-result.invalid.bad-gate.json",
+      "local_command_id": "schema-invalid-evaluation-rejection",
+      "local_command": "python tools/validate_json.py schemas/evaluation-result.schema.json tests/fixtures/evaluation-result.invalid.bad-gate.json",
+      "ci_job_id": "inv-schema-invalid-rejection",
+      "blocked_failure_mode_codes": [
+        "FM_SCHEMA_REGRESSION"
+      ],
+      "what_is_not_verified": [
+        "Does not validate production payload diversity."
+      ]
+    },
+    {
+      "invariant_id": "INV_DEPENDENCY_HERMETICITY_LOCKED",
+      "domain_class": "integrity",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "artifact_integrity_claim",
+      "minimum_evidence_requirement": "requirements.txt uses deterministic pinning and governance lockfile remains synchronized with declared/used dependencies.",
+      "enforcer": "python tools/check_dependency_hermeticity.py",
+      "local_command_id": "dependency-hermeticity",
+      "local_command": "python tools/check_dependency_hermeticity.py",
+      "ci_job_id": "inv-dependency-hermeticity",
+      "blocked_failure_mode_codes": [
+        "FM_DEPENDENCY_HERMETICITY",
+        "FM_UNDECLARED_DEPENDENCY"
+      ],
+      "what_is_not_verified": [
+        "Does not provide full transitive lock reproducibility across all operating systems."
+      ]
+    },
+    {
+      "invariant_id": "INV_CANONICAL_HASH_STABLE",
+      "domain_class": "integrity",
+      "verification_scope": "CI_ONLY",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "artifact_integrity_claim",
+      "minimum_evidence_requirement": "Representative canonical hash inputs remain stable across repeated runs and edge-case negatives pass.",
+      "enforcer": "python tools/check_canonical_hash_stability.py --repeat 3 + python tools/check_canonicalization_negative_cases.py",
+      "ci_job_id": "inv-canonical-hash-stability",
+      "blocked_failure_mode_codes": [
+        "FM_NONDETERMINISTIC_HASH"
+      ],
+      "what_is_not_verified": [
+        "Does not prove artifact semantic correctness."
+      ]
+    },
+    {
+      "invariant_id": "INV_WORKED_EXAMPLE_EXECUTES",
+      "domain_class": "semantic_sufficiency",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "semantic_behavior_claim",
+      "minimum_evidence_requirement": "Worked example semantic invariants pass and repeat-run consistency is stable.",
+      "enforcer": "python tools/assert_worked_example_semantics.py --out-dir .ci-artifacts",
+      "local_command_id": "worked-example-run",
+      "local_command": "python tools/reference_runner.py examples/worked-example/SE_WORKED_EXAMPLE_INPUT.json --output /tmp/SE_WORKED_EXAMPLE_OUTPUT.check.json",
+      "ci_job_id": "inv-worked-example-and-output-validity",
+      "blocked_failure_mode_codes": [
+        "FM_RUNNER_EXECUTION_DRIFT"
+      ],
+      "what_is_not_verified": [
+        "Does not cover all adversarial scenarios."
+      ]
+    },
+    {
+      "invariant_id": "INV_FAIL_CLOSED_MISSING_EVIDENCE",
+      "domain_class": "semantic_sufficiency",
+      "verification_scope": "CI_ONLY",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "semantic_behavior_claim",
+      "minimum_evidence_requirement": "No-evidence mutation fails with strict fail-closed assertions.",
+      "enforcer": "python tools/assert_fail_closed_semantics.py (via inv-fail-closed-missing-evidence job)",
+      "ci_job_id": "inv-fail-closed-missing-evidence",
+      "blocked_failure_mode_codes": [
+        "FM_FAIL_CLOSED_REGRESSION"
+      ],
+      "what_is_not_verified": [
+        "Does not prove all semantic edge cases."
+      ]
+    },
+    {
+      "invariant_id": "INV_GATE_IDS_CANONICAL",
+      "domain_class": "validity",
+      "verification_scope": "CI_ONLY",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "schema_validity_claim",
+      "minimum_evidence_requirement": "Canonical gate IDs remain unchanged.",
+      "enforcer": "python tools/assert_gate_benchmark_invariants.py --gate-fixture tests/fixtures/evaluation-result.valid.json",
+      "ci_job_id": "inv-gate-id-canonicality",
+      "blocked_failure_mode_codes": [
+        "FM_GATE_ID_DRIFT"
+      ],
+      "what_is_not_verified": [
+        "Does not verify full score decomposition."
+      ]
+    },
+    {
+      "invariant_id": "INV_BENCHMARK_HONESTY_DEMO_ONLY",
+      "domain_class": "semantic_sufficiency",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "semantic_behavior_claim",
+      "minimum_evidence_requirement": "Benchmark metrics satisfy demo-only status plus honesty thresholds/docs alignment, and regenerated benchmark outputs match committed tracked outputs.",
+      "enforcer": "python tools/assert_gate_benchmark_invariants.py --metrics benchmark/metrics.json",
+      "local_command_id": "benchmark-run",
+      "local_command": "python benchmark/benchmark_runner.py",
+      "ci_job_id": "inv-benchmark-demo-and-honesty",
+      "blocked_failure_mode_codes": [
+        "FM_BENCHMARK_OVERCLAIM"
+      ],
+      "what_is_not_verified": [
+        "Does not imply production representativeness."
+      ]
+    },
+    {
+      "invariant_id": "INV_ASSURANCE_DEPTH_POLICY",
+      "domain_class": "semantic_sufficiency",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "semantic_behavior_claim",
+      "minimum_evidence_requirement": "Benchmark outputs (metrics, case-level CSV, per-case evaluations) and canonical gate fixture jointly enforce assurance-depth anti-overclaim policy under deterministic checks.",
+      "enforcer": "python tools/assert_gate_benchmark_invariants.py --metrics benchmark/metrics.json --gate-fixture tests/fixtures/evaluation-result.valid.json",
+      "local_command_id": "benchmark-run",
+      "local_command": "python benchmark/benchmark_runner.py",
+      "ci_job_id": "inv-benchmark-demo-and-honesty",
+      "blocked_failure_mode_codes": [
+        "FM_BENCHMARK_OVERCLAIM"
+      ],
+      "what_is_not_verified": [
+        "Does not imply production representativeness."
+      ]
+    },
+    {
+      "invariant_id": "INV_PYTHON_ENTRYPOINTS_INVOKABLE",
+      "domain_class": "hygiene",
+      "verification_scope": "CI_ONLY",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "Governance-critical tools expose stable CLI help/JSON contracts and deterministic unit/integration tests for pcos compile/run/verify/replay/bench surfaces execute in CI.",
+      "enforcer": "python tools/check_cli_contracts.py (via inv-python-entrypoints-and-compile job)",
+      "ci_job_id": "inv-python-entrypoints-and-compile",
+      "blocked_failure_mode_codes": [
+        "FM_ENTRYPOINT_BREAKAGE",
+        "FM_CLI_CONTRACT_DRIFT"
+      ],
+      "what_is_not_verified": [
+        "Does not validate all runtime states."
+      ]
+    },
+    {
+      "invariant_id": "INV_COMPILE_SANITY",
+      "domain_class": "hygiene",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "compileall succeeds for tools, benchmark, and pcos modules.",
+      "enforcer": "python -m compileall tools benchmark pcos",
+      "local_command_id": "compile-sanity",
+      "local_command": "python -m compileall tools benchmark pcos",
+      "ci_job_id": "inv-python-entrypoints-and-compile",
+      "blocked_failure_mode_codes": [
+        "FM_SYNTAX_BREAKAGE"
+      ],
+      "what_is_not_verified": [
+        "Does not prove algorithmic correctness."
+      ]
+    },
+    {
+      "invariant_id": "INV_PUBLICATION_INTERNAL_LINK_INTEGRITY",
+      "domain_class": "publication",
+      "verification_scope": "CI_ONLY",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "publication_surface_claim",
+      "minimum_evidence_requirement": "Internal links and anchors resolve correctly.",
+      "enforcer": "inv-publication-internal-link-integrity job",
+      "ci_job_id": "inv-publication-internal-link-integrity",
+      "blocked_failure_mode_codes": [
+        "FM_INTERNAL_LINK_BREAKAGE"
+      ],
+      "what_is_not_verified": [
+        "Does not measure external URL uptime."
+      ]
+    },
+    {
+      "invariant_id": "INV_PUBLICATION_EXTERNAL_LINK_AUDIT",
+      "domain_class": "publication",
+      "verification_scope": "CI_ONLY",
+      "authority_class": "MACHINE_ASSISTED",
+      "claim_class": "publication_surface_claim",
+      "minimum_evidence_requirement": "External link audit runs in CI as non-blocking evidence and reports reachable failures without affecting deterministic required merge gates.",
+      "enforcer": "audit-publication-external-link-reachability job (advisory)",
+      "ci_job_id": "audit-publication-external-link-reachability",
+      "blocked_failure_mode_codes": [
+        "FM_EXTERNAL_LINK_BREAKAGE"
+      ],
+      "what_is_not_verified": [
+        "External network uptime is non-deterministic and not a required merge gate.",
+        "Does not provide repository-native proof for third-party availability."
+      ]
+    },
+    {
+      "invariant_id": "INV_PUBLICATION_SURFACE_STRUCTURE",
+      "domain_class": "publication",
+      "verification_scope": "CI_ONLY",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "publication_surface_claim",
+      "minimum_evidence_requirement": "Publication pages satisfy structural metadata/imports/asset coverage checks.",
+      "enforcer": "inv-publication-surface-structure job",
+      "ci_job_id": "inv-publication-surface-structure",
+      "blocked_failure_mode_codes": [
+        "FM_PAGES_SURFACE_BREAKAGE"
+      ],
+      "what_is_not_verified": [
+        "Does not substitute UX/content quality review."
+      ]
+    },
+    {
+      "invariant_id": "INV_CI_ARTIFACT_SEMANTICS_AND_PROVENANCE",
+      "domain_class": "integrity",
+      "verification_scope": "CI_ONLY",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "artifact_integrity_claim",
+      "minimum_evidence_requirement": "CI evidence artifacts include checksum manifest entries classified as required/optional/diagnostic; required entries (including run.status and core outputs) must verify with canonical names, producer provenance, non-empty size, checksums, and deterministic path normalization against artifact download roots.",
+      "enforcer": "inv-ci-artifact-semantics-and-provenance job",
+      "ci_job_id": "inv-ci-artifact-semantics-and-provenance",
+      "blocked_failure_mode_codes": [
+        "FM_ARTIFACT_PROVENANCE_DRIFT"
+      ],
+      "what_is_not_verified": [
+        "Does not prove artifact semantic truthfulness by itself."
+      ]
+    },
+    {
+      "invariant_id": "INV_ONE_PR_DOCTRINE_ENFORCED",
+      "domain_class": "hygiene",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "Governance validator confirms one-PR doctrine controls.",
+      "enforcer": "python tools/validate_governance.py",
+      "local_command_id": "governance-self-integrity",
+      "local_command": "python tools/validate_governance.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_DOCTRINE_DRIFT"
+      ],
+      "what_is_not_verified": [
+        "Does not configure remote repository settings."
+      ]
+    },
+    {
+      "invariant_id": "INV_GOVERNANCE_CONTRACT_ALIGNMENT",
+      "domain_class": "hygiene",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "Validator enforces registry/workflow/checklist/pre-commit alignment.",
+      "enforcer": "python tools/validate_governance.py",
+      "local_command_id": "governance-self-integrity",
+      "local_command": "python tools/validate_governance.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_POLICY_DOC_DRIFT"
+      ],
+      "what_is_not_verified": [
+        "Does not replace constitutional human review."
+      ]
+    },
+    {
+      "invariant_id": "INV_GOVERNANCE_VALIDATOR_SELF_HOSTING",
+      "domain_class": "hygiene",
+      "verification_scope": "LOCAL_ONLY",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "Governance validator tests pass for success and failure modes.",
+      "enforcer": "python -m unittest tests/governance/test_validate_governance.py",
+      "local_command_id": "governance-self-tests",
+      "local_command": "python -m unittest tests/governance/test_validate_governance.py",
+      "blocked_failure_mode_codes": [
+        "FM_GOVERNANCE_REGRESSION"
+      ],
+      "what_is_not_verified": [
+        "Does not replace direct code review of validator changes."
+      ]
+    },
+    {
+      "invariant_id": "INV_REQUIRED_CHECK_MAPPING_STABLE",
+      "domain_class": "hygiene",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "Canonical required-check mapping file is synchronized with immutable workflow job IDs and reviewer-facing names.",
+      "enforcer": "python tools/validate_governance.py",
+      "local_command_id": "governance-self-integrity",
+      "local_command": "python tools/validate_governance.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_REQUIRED_CHECK_MAPPING_DRIFT"
+      ],
+      "what_is_not_verified": [
+        "Does not configure remote repository settings."
+      ]
+    },
+    {
+      "invariant_id": "INV_GITHUB_SETTINGS_BASELINE_DECLARED",
+      "domain_class": "hygiene",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "Machine-readable external GitHub settings baseline exists and required status checks match canonical required-check mapping.",
+      "enforcer": "python tools/validate_governance.py",
+      "local_command_id": "governance-self-integrity",
+      "local_command": "python tools/validate_governance.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_GITHUB_SETTINGS_BASELINE_DRIFT",
+        "FM_POST_MERGE_OPS_DRIFT"
+      ],
+      "what_is_not_verified": [
+        "Does not enforce GitHub settings directly from repository files."
+      ]
+    },
+    {
+      "invariant_id": "INV_POLICY_DRIFT_REVIEW_MANDATORY",
+      "domain_class": "hygiene",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "PR template and contributing policy mandate explicit policy-drift review for governance-critical surfaces.",
+      "enforcer": "python tools/validate_governance.py",
+      "local_command_id": "governance-self-integrity",
+      "local_command": "python tools/validate_governance.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_POLICY_DRIFT_REVIEW_MISSING"
+      ],
+      "what_is_not_verified": [
+        "Does not replace constitutional human review."
+      ]
+    },
+    {
+      "invariant_id": "INV_WORKFLOW_TRUST_SURFACE_HARDENED",
+      "domain_class": "integrity",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "artifact_integrity_claim",
+      "minimum_evidence_requirement": "Workflow forbids dangerous triggers/permissions/escalation surfaces and enforces strictness for critical jobs.",
+      "enforcer": "python tools/validate_governance.py",
+      "local_command_id": "governance-self-integrity",
+      "local_command": "python tools/validate_governance.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_WORKFLOW_PRIVILEGE_ESCALATION",
+        "FM_JOB_WEAKENING"
+      ],
+      "what_is_not_verified": [
+        "Does not enforce GitHub-hosted runner internals."
+      ]
+    },
+    {
+      "invariant_id": "INV_MANIFEST_REPOMAP_TRUTHFUL",
+      "domain_class": "integrity",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "artifact_integrity_claim",
+      "minimum_evidence_requirement": "MANIFEST and repo-map inventories are symmetric with tracked tree and governance surfaces, with denylisted artifacts blocked.",
+      "enforcer": "python tools/validate_governance.py",
+      "local_command_id": "governance-self-integrity",
+      "local_command": "python tools/validate_governance.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_MANIFEST_INVENTORY_UNTRUTHFUL",
+        "FM_REPO_MAP_UNTRUTHFUL"
+      ],
+      "what_is_not_verified": [
+        "Does not prove semantic quality of non-governance content."
+      ]
+    },
+    {
+      "invariant_id": "INV_CODEOWNERS_EFFECTIVE_OWNERSHIP",
+      "domain_class": "hygiene",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "CODEOWNERS does not contain broad late rules that dilute governance-critical ownership patterns.",
+      "enforcer": "python tools/validate_governance.py",
+      "local_command_id": "governance-self-integrity",
+      "local_command": "python tools/validate_governance.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_CODEOWNERS_DILUTION"
+      ],
+      "what_is_not_verified": [
+        "Does not enforce reviewer staffing availability."
+      ]
+    },
+    {
+      "invariant_id": "INV_PR_TEMPLATE_INTAKE_QUALITY",
+      "domain_class": "hygiene",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "PR template preserves canonical section ordering and minimum non-placeholder instruction quality.",
+      "enforcer": "python tools/validate_governance.py",
+      "local_command_id": "governance-self-integrity",
+      "local_command": "python tools/validate_governance.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_PR_TEMPLATE_WEAKENING"
+      ],
+      "what_is_not_verified": [
+        "Does not validate final human-authored PR narrative quality."
+      ]
+    },
+    {
+      "invariant_id": "INV_LOCAL_BASELINE_CANONICAL",
+      "domain_class": "hygiene",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "Canonical local baseline command/script remains synchronized with checklist and CI parity surfaces.",
+      "enforcer": "python tools/validate_governance.py",
+      "local_command_id": "governance-self-integrity",
+      "local_command": "python tools/validate_governance.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_LOCAL_BASELINE_DRIFT"
+      ],
+      "what_is_not_verified": [
+        "Does not execute external GitHub settings operations."
+      ]
+    },
+    {
+      "invariant_id": "INV_GOVERNANCE_ARTIFACTS_DETERMINISTIC",
+      "domain_class": "integrity",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "artifact_integrity_claim",
+      "minimum_evidence_requirement": "Generated governance artifacts are deterministic under repeated generation checks.",
+      "enforcer": "python tools/validate_governance.py",
+      "local_command_id": "governance-self-integrity",
+      "local_command": "python tools/validate_governance.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_GOVERNANCE_ARTIFACT_NONDETERMINISM"
+      ],
+      "what_is_not_verified": [
+        "Does not guarantee determinism for non-governance artifacts."
+      ]
+    },
+    {
+      "invariant_id": "INV_ONE_PR_DOCTRINE_EXTENDED",
+      "domain_class": "hygiene",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "Repository forbids common automated PR generators that weaken one-PR governance doctrine.",
+      "enforcer": "python tools/validate_governance.py",
+      "local_command_id": "governance-self-integrity",
+      "local_command": "python tools/validate_governance.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_ONE_PR_DOCTRINE_WEAKENING"
+      ],
+      "what_is_not_verified": [
+        "Does not control third-party organization-level automations outside repository settings."
+      ]
+    },
+    {
+      "invariant_id": "INV_GOVERNANCE_DOCUMENTATION_TRUTHFUL",
+      "domain_class": "hygiene",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "Governance docs must not claim repo-native enforcement for controls known to be external-only.",
+      "enforcer": "python tools/validate_governance.py",
+      "local_command_id": "governance-self-integrity",
+      "local_command": "python tools/validate_governance.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_DOCUMENTATION_UNTRUTHFUL"
+      ],
+      "what_is_not_verified": [
+        "Does not replace constitutional human review."
+      ]
+    },
+    {
+      "invariant_id": "INV_CANONICAL_LOCAL_BASELINE_EXECUTABLE",
+      "domain_class": "hygiene",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "Canonical local baseline script verifies checklist command contract and supports executable baseline mode.",
+      "enforcer": "python tools/run_local_governance_baseline.py",
+      "local_command_id": "governance-local-baseline",
+      "local_command": "python tools/run_local_governance_baseline.py",
+      "ci_job_id": "governance-hygiene",
+      "blocked_failure_mode_codes": [
+        "FM_LOCAL_BASELINE_DRIFT"
+      ],
+      "what_is_not_verified": [
+        "Does not execute external GitHub settings operations."
+      ]
+    },
+    {
+      "invariant_id": "INV_PR_INTAKE_NONEMPTY_ON_PULL_REQUEST",
+      "domain_class": "hygiene",
+      "verification_scope": "CI_ONLY",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "governance_hygiene_claim",
+      "minimum_evidence_requirement": "On pull_request events, mandatory PR sections Human review required and Policy-drift review contain non-formal non-empty content.",
+      "enforcer": "python tools/validate_pr_intake.py (via inv-pr-intake-quality job)",
+      "ci_job_id": "inv-pr-intake-quality",
+      "blocked_failure_mode_codes": [
+        "FM_PR_INTAKE_QUALITY"
+      ],
+      "what_is_not_verified": [
+        "Does not replace constitutional human review."
+      ]
+    },
+    {
+      "invariant_id": "INV_EXECUTION_CHAIN_INDEPENDENTLY_RECOMPUTABLE",
+      "domain_class": "integrity",
+      "verification_scope": "SHARED",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "artifact_integrity_claim",
+      "minimum_evidence_requirement": "Execution-state chain is independently recomputed from canonical input and emitted replay capsules without trusting emitted hashes.",
+      "enforcer": "python tools/verify_execution_chain.py --input examples/worked-example/SE_WORKED_EXAMPLE_INPUT.json --result /tmp/SE_WORKED_EXAMPLE_OUTPUT.check.json",
+      "ci_job_id": "inv-worked-example-and-output-validity",
+      "blocked_failure_mode_codes": [
+        "FM_EXECUTION_CHAIN_VERIFICATION_DRIFT"
+      ],
+      "what_is_not_verified": [
+        "Does not provide external hardware attestation."
+      ],
+      "local_command_id": "execution-chain-verify",
+      "local_command": "python tools/verify_execution_chain.py --input examples/worked-example/SE_WORKED_EXAMPLE_INPUT.json --result /tmp/SE_WORKED_EXAMPLE_OUTPUT.check.json"
+    },
+    {
+      "invariant_id": "INV_GIT_AUTHORITATIVE_EXECUTION_SURFACE",
+      "domain_class": "integrity",
+      "verification_scope": "CI_ONLY",
+      "authority_class": "MACHINE_VERIFIED",
+      "claim_class": "artifact_integrity_claim",
+      "minimum_evidence_requirement": "Execution verification paths hard-fail on non-authoritative Git state for critical execution/governance surfaces.",
+      "enforcer": "python tools/verify_execution_chain.py --input examples/worked-example/SE_WORKED_EXAMPLE_INPUT.json --result /tmp/SE_WORKED_EXAMPLE_OUTPUT.chain.json",
+      "ci_job_id": "inv-worked-example-and-output-validity",
+      "blocked_failure_mode_codes": [
+        "FM_GIT_AUTHORITY_EXECUTION_DRIFT"
+      ],
+      "what_is_not_verified": [
+        "Does not attest external compute environment provenance."
+      ]
+    }
+  ]
+}

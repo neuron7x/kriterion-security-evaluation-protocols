@@ -1,0 +1,17 @@
+name: pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+
+jobs:
+  no-op:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Pages workflow reserved; deployment is intentionally disabled in this repository."

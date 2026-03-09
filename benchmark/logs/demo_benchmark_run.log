@@ -1,0 +1,10 @@
+RUN case-001 -> NOT_READY composite=2.0
+RUN case-002 -> NOT_READY composite=2.3
+RUN case-003 -> NOT_READY composite=2.25
+RUN case-004 -> READY_HIGH_CONFIDENCE composite=4.0
+RUN case-005 -> READY_HIGH_CONFIDENCE composite=4.0
+RUN case-006 -> NOT_READY composite=2.0
+RUN case-007 -> NOT_READY composite=0.0
+RUN case-008 -> NOT_READY composite=0.0
+RUN case-009 -> NOT_READY composite=0.0
+RUN case-010 -> NOT_READY composite=0.0

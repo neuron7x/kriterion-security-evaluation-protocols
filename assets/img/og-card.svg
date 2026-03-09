@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#050505"/>
+  <path d="M0 126H1200M0 252H1200M0 378H1200M0 504H1200M240 0V630M480 0V630M720 0V630M960 0V630" stroke="#171717"/>
+  <rect x="60" y="60" width="1080" height="510" rx="28" stroke="rgba(255,255,255,0.10)" stroke-width="2"/>
+  <text x="86" y="132" fill="#FFFFFF" font-size="28" font-family="Arial" letter-spacing="4">FRONTIER REPO EDITION · OBSIDIAN / SNOW / SIGNAL RED</text>
+  <text x="86" y="240" fill="#FFFFFF" font-size="74" font-family="Arial" font-weight="700">KRITERION</text>
+  <text x="86" y="308" fill="#EAEAEA" font-size="30" font-family="Arial">Controlled cognition · evidence-first evaluation · benchmark-governed publication</text>
+  <text x="86" y="420" fill="#FF453A" font-size="22" font-family="Arial" letter-spacing="5">NOT A PROMPT PACK · A SYSTEM INTERFACE</text>
+  <circle cx="992" cy="314" r="164" stroke="rgba(255,255,255,0.14)" stroke-width="3"/>
+  <circle cx="992" cy="314" r="110" fill="#050505" stroke="#FFFFFF" stroke-width="8"/>
+  <circle cx="992" cy="314" r="62" fill="#FFFFFF"/>
+  <path d="M992 150V92M1156 314H1098M992 478V536M828 314H770" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="992" cy="92" r="16" fill="#FF453A"/>
+  <circle cx="1156" cy="314" r="16" fill="#FF453A"/>
+  <circle cx="992" cy="536" r="16" fill="#FF453A"/>
+  <circle cx="770" cy="314" r="16" fill="#FF453A"/>
+</svg>

@@ -1,0 +1,56 @@
+{
+  "report_metadata": {
+    "report_id": "audit-grade-security-protocols-benchmark-2026",
+    "version": "1.0",
+    "date": "2026-03-06",
+    "status": "preliminary",
+    "notes": "Use 'validated' only when raw manifests, labels, logs, and metric scripts are attached."
+  },
+  "dataset_manifest": {
+    "total_cases": 0,
+    "synthetic_cases": 0,
+    "real_anonymized_cases": 0,
+    "case_ids": [],
+    "manifest_hash": ""
+  },
+  "model_runs": [
+    {
+      "provider": "OpenAI",
+      "marketing_name": "GPT-5.4",
+      "exact_model_id": "gpt-5.4",
+      "reasoning_mode": "",
+      "tooling_enabled": true,
+      "timestamp": "",
+      "system_prompt_hash": "",
+      "prompt_bundle_hash": "",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    }
+  ],
+  "human_raters": [
+    {
+      "rater_id": "rater-01",
+      "rater_level": "Principal Security Engineer",
+      "independence_attested": true
+    }
+  ],
+  "metrics": {
+    "task_level_weighted_alpha": 0.0,
+    "task_level_weighted_kappa": 0.0,
+    "gate_agreement": 0.0,
+    "final_classification_agreement": 0.0,
+    "domain_score_mae": 0.0,
+    "domain_score_rmse": 0.0,
+    "run_stddev": 0.0,
+    "anti_gaming_recall": 0.0,
+    "anti_gaming_false_positive_rate": 0.0,
+    "prompt_injection_resistance": 0.0,
+    "median_runtime_seconds": 0.0,
+    "p95_runtime_seconds": 0.0,
+    "median_cost_usd": 0.0
+  },
+  "claim_status": {
+    "benchmark_overall": "reported_not_verified"
+  }
+}

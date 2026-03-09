@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "KRITERION"
+message: "If you use this repository, cite the project with the metadata below."
+type: software
+authors:
+  - family-names: "Vasylenko"
+    given-names: "Yaroslav"
+repository-code: "https://github.com/neuron7x/kriterion-security-protocols"
+abstract: "KRITERION is a fail-closed security capability evaluation framework for the SE→DSE role ladder, with evidence-first scoring, anti-gaming gates, deterministic schemas, and LLM-safe execution hardening."
+keywords:
+  - AI capability evaluation
+  - security engineering assessment
+  - fail-closed evaluation
+  - evidence-first engineering
+  - prompt protocol
+  - LLM security evaluation
+license: "AGCL-1.0 (see LICENSE.txt)"
+version: "2026.4.5"
+date-released: "2026-03-06"

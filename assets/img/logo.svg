@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" fill="none">
+  <rect width="640" height="640" rx="84" fill="#050505"/>
+  <rect x="44" y="44" width="552" height="552" rx="40" stroke="rgba(255,255,255,0.11)" stroke-width="2"/>
+  <path d="M128 128H512M128 320H512M128 512H512M128 128V512M320 128V512M512 128V512" stroke="#1A1A1A" stroke-width="2"/>
+  <circle cx="320" cy="320" r="172" stroke="rgba(255,255,255,0.16)" stroke-width="3"/>
+  <circle cx="320" cy="320" r="108" fill="#050505" stroke="#FFFFFF" stroke-width="8"/>
+  <circle cx="320" cy="320" r="60" fill="#FFFFFF"/>
+  <path d="M320 148V78" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+  <path d="M492 320H562" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+  <path d="M320 492V562" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+  <path d="M148 320H78" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="320" cy="78" r="18" fill="#FF453A"/>
+  <circle cx="562" cy="320" r="18" fill="#FF453A"/>
+  <circle cx="320" cy="562" r="18" fill="#FF453A"/>
+  <circle cx="78" cy="320" r="18" fill="#FF453A"/>
+</svg>

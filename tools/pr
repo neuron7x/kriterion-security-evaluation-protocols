@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+python tools/compile_pr_intake.py \
+  --validate "python tools/check_cli_contracts.py" \
+  --validate "python tools/validate_governance.py" \
+  "$@"

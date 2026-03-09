@@ -1,0 +1,7 @@
+OBJECTIVE: execute full pcos e2e pipeline
+SECTION: compile then run then verify
+CONSTRAINT: keep trace serializable
+STEP: build prompt ir
+STEP: run execution kernel
+VERIFY: check verifier_result is PASS
+CLOSE: close after verification

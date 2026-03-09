@@ -1,0 +1,485 @@
+{
+  "protocol_metadata": {
+    "protocol_id": "GPT5.4-AUDIT-HARDENING-PROTOCOL-2026",
+    "protocol_version": "2026.2",
+    "target_protocol_id": "SE-OPS-PROTOCOL-2026.1",
+    "execution_mode": "MODE_STRICT_AUDIT",
+    "evaluation_timestamp": "1970-01-01T00:00:00Z",
+    "model_identifier": "reference-runner-1.0",
+    "artifact_count": 3,
+    "evaluation_hash": "5504a9760541ac16334a483a3f909247ff0505440f75445932e88ee12f687aeb"
+  },
+  "artifact_validation_results": [
+    {
+      "artifact_id": "ART.RUNBOOK.IDENTITY.001",
+      "schema_status": "VALID",
+      "integrity_status": "VALID",
+      "admissible": true,
+      "reason_codes": []
+    },
+    {
+      "artifact_id": "ART.METRICS.IDENTITY.001",
+      "schema_status": "VALID",
+      "integrity_status": "VALID",
+      "admissible": true,
+      "reason_codes": []
+    },
+    {
+      "artifact_id": "ART.INCIDENT.IDENTITY.001",
+      "schema_status": "VALID",
+      "integrity_status": "VALID",
+      "admissible": true,
+      "reason_codes": []
+    }
+  ],
+  "task_scores": [
+    {
+      "protocol_id": "SE-OPS-PROTOCOL-2026.1",
+      "domain_id": "SE.OPS.READINESS",
+      "task_id": "SE.OPS.READINESS.T1",
+      "task_weight": 40,
+      "evidence_artifact_ids": [
+        "ART.RUNBOOK.IDENTITY.001"
+      ],
+      "raw_score": 4.0,
+      "evidence_cap": 5.0,
+      "penalties_applied": [],
+      "final_score": 4.0,
+      "reason_codes": []
+    },
+    {
+      "protocol_id": "SE-OPS-PROTOCOL-2026.1",
+      "domain_id": "SE.OPS.MONITORING",
+      "task_id": "SE.OPS.MONITORING.T1",
+      "task_weight": 30,
+      "evidence_artifact_ids": [
+        "ART.METRICS.IDENTITY.001"
+      ],
+      "raw_score": 4.0,
+      "evidence_cap": 4.0,
+      "penalties_applied": [],
+      "final_score": 4.0,
+      "reason_codes": []
+    },
+    {
+      "protocol_id": "SE-OPS-PROTOCOL-2026.1",
+      "domain_id": "SE.OPS.IR",
+      "task_id": "SE.OPS.IR.T1",
+      "task_weight": 30,
+      "evidence_artifact_ids": [
+        "ART.INCIDENT.IDENTITY.001"
+      ],
+      "raw_score": 5.0,
+      "evidence_cap": 5.0,
+      "penalties_applied": [],
+      "final_score": 5.0,
+      "reason_codes": []
+    }
+  ],
+  "domain_scores": [
+    {
+      "domain_id": "SE.OPS.READINESS",
+      "domain_name": "Operational Readiness",
+      "must_have": true,
+      "weighted_score": 1.6,
+      "evidence_class_distribution": {
+        "LOW": 0,
+        "MED": 0,
+        "HIGH": 1
+      },
+      "domain_cap": 5.0,
+      "final_domain_score": 1.6
+    },
+    {
+      "domain_id": "SE.OPS.MONITORING",
+      "domain_name": "Monitoring and Metrics",
+      "must_have": true,
+      "weighted_score": 1.2,
+      "evidence_class_distribution": {
+        "LOW": 0,
+        "MED": 1,
+        "HIGH": 0
+      },
+      "domain_cap": 4.0,
+      "final_domain_score": 1.2
+    },
+    {
+      "domain_id": "SE.OPS.IR",
+      "domain_name": "Incident Response",
+      "must_have": true,
+      "weighted_score": 1.5,
+      "evidence_class_distribution": {
+        "LOW": 0,
+        "MED": 0,
+        "HIGH": 1
+      },
+      "domain_cap": 5.0,
+      "final_domain_score": 1.5
+    }
+  ],
+  "gate_results": [
+    {
+      "gate_id": "G0_INTEGRITY",
+      "status": "PASS",
+      "blocking": false,
+      "reason_codes": [],
+      "affected_artifact_ids": []
+    },
+    {
+      "gate_id": "G1_MINIMUM_READINESS",
+      "status": "FAIL",
+      "blocking": true,
+      "reason_codes": [
+        "MUST_HAVE_DOMAIN_BELOW_THRESHOLD"
+      ],
+      "affected_artifact_ids": []
+    },
+    {
+      "gate_id": "G2_EVIDENCE_SUFFICIENCY",
+      "status": "PASS",
+      "blocking": false,
+      "reason_codes": [],
+      "affected_artifact_ids": []
+    }
+  ],
+  "final_classification": {
+    "status": "FAIL",
+    "classification_label": "NOT_READY",
+    "composite_score": 1.4333,
+    "integrity_hash": "5504a9760541ac16334a483a3f909247ff0505440f75445932e88ee12f687aeb"
+  },
+  "execution_chain_format_version": "execution_chain.v1",
+  "execution_state_chain": [
+    {
+      "phase_index": 0,
+      "phase_id": "artifact_validation",
+      "previous_step_hash": "cd2aad3e3aa52887b1724f33c5e7cce144b7278b113069fc95aa05dbf45e5247",
+      "step_hash": "00f224ca8e07ca57829387bf76b08c546fd0f8e62518ca17c66d182312bd73bd",
+      "contract_version": "2026.2",
+      "phase_input_digest": "08a6a4b44afd8b50598a14a0ecb60ab7982c6ce6ac2169528264ef7852fc7e68",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.INCIDENT.IDENTITY.001",
+          "ART.METRICS.IDENTITY.001",
+          "ART.RUNBOOK.IDENTITY.001"
+        ],
+        "admitted_artifact_fingerprints": [
+          "30554a83551b4cfa61d0f4b6e5aff2b4e9a36aee05cee48ac9453a03f4cfc0fc",
+          "3b14d8556ea2cac3f02aa20ae1a270413a08aa1a4842822d6890b42fa35b3994",
+          "996f6a156c22874e30465507dbcb890b9bf08cd828ea1bb7442fdc44558a3147"
+        ],
+        "gate_state": {
+          "G0_INTEGRITY": "PASS"
+        },
+        "phase_material": {
+          "artifact_validation_results": [
+            {
+              "artifact_id": "ART.INCIDENT.IDENTITY.001",
+              "schema_status": "VALID",
+              "integrity_status": "VALID",
+              "admissible": true,
+              "reason_codes": []
+            },
+            {
+              "artifact_id": "ART.METRICS.IDENTITY.001",
+              "schema_status": "VALID",
+              "integrity_status": "VALID",
+              "admissible": true,
+              "reason_codes": []
+            },
+            {
+              "artifact_id": "ART.RUNBOOK.IDENTITY.001",
+              "schema_status": "VALID",
+              "integrity_status": "VALID",
+              "admissible": true,
+              "reason_codes": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "phase_index": 1,
+      "phase_id": "admissibility_derivation",
+      "previous_step_hash": "00f224ca8e07ca57829387bf76b08c546fd0f8e62518ca17c66d182312bd73bd",
+      "step_hash": "732dea0147be73c65c12b7114059f5e9201bf07dff81da6b0cd57fc9bc1cd36a",
+      "contract_version": "2026.2",
+      "phase_input_digest": "9bc05031afedd8fbf6521008ad616ab6dddeaaf460a798f2cb5054884161c135",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.INCIDENT.IDENTITY.001",
+          "ART.METRICS.IDENTITY.001",
+          "ART.RUNBOOK.IDENTITY.001"
+        ],
+        "admitted_artifact_fingerprints": [
+          "30554a83551b4cfa61d0f4b6e5aff2b4e9a36aee05cee48ac9453a03f4cfc0fc",
+          "3b14d8556ea2cac3f02aa20ae1a270413a08aa1a4842822d6890b42fa35b3994",
+          "996f6a156c22874e30465507dbcb890b9bf08cd828ea1bb7442fdc44558a3147"
+        ],
+        "gate_state": {},
+        "phase_material": {
+          "admitted_artifact_ids": [
+            "ART.INCIDENT.IDENTITY.001",
+            "ART.METRICS.IDENTITY.001",
+            "ART.RUNBOOK.IDENTITY.001"
+          ],
+          "admitted_artifact_fingerprints": [
+            "30554a83551b4cfa61d0f4b6e5aff2b4e9a36aee05cee48ac9453a03f4cfc0fc",
+            "3b14d8556ea2cac3f02aa20ae1a270413a08aa1a4842822d6890b42fa35b3994",
+            "996f6a156c22874e30465507dbcb890b9bf08cd828ea1bb7442fdc44558a3147"
+          ]
+        }
+      }
+    },
+    {
+      "phase_index": 2,
+      "phase_id": "task_scoring",
+      "previous_step_hash": "broken",
+      "step_hash": "a980c3bd936c4faa6c8a8daeb87c9e0ac3fb98431b918ac46df4d913f57d139e",
+      "contract_version": "2026.2",
+      "phase_input_digest": "0182b29fad48c35029292cbf8d14d82d8b3dbffb59ac0741995012b3f34d05a7",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.INCIDENT.IDENTITY.001",
+          "ART.METRICS.IDENTITY.001",
+          "ART.RUNBOOK.IDENTITY.001"
+        ],
+        "admitted_artifact_fingerprints": [
+          "30554a83551b4cfa61d0f4b6e5aff2b4e9a36aee05cee48ac9453a03f4cfc0fc",
+          "3b14d8556ea2cac3f02aa20ae1a270413a08aa1a4842822d6890b42fa35b3994",
+          "996f6a156c22874e30465507dbcb890b9bf08cd828ea1bb7442fdc44558a3147"
+        ],
+        "gate_state": {},
+        "phase_material": {
+          "task_scores": [
+            {
+              "domain_id": "SE.OPS.IR",
+              "task_id": "SE.OPS.IR.T1",
+              "final_score": 5.0,
+              "evidence_artifact_ids": [
+                "ART.INCIDENT.IDENTITY.001"
+              ],
+              "reason_codes": []
+            },
+            {
+              "domain_id": "SE.OPS.MONITORING",
+              "task_id": "SE.OPS.MONITORING.T1",
+              "final_score": 4.0,
+              "evidence_artifact_ids": [
+                "ART.METRICS.IDENTITY.001"
+              ],
+              "reason_codes": []
+            },
+            {
+              "domain_id": "SE.OPS.READINESS",
+              "task_id": "SE.OPS.READINESS.T1",
+              "final_score": 4.0,
+              "evidence_artifact_ids": [
+                "ART.RUNBOOK.IDENTITY.001"
+              ],
+              "reason_codes": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "phase_index": 3,
+      "phase_id": "domain_scoring",
+      "previous_step_hash": "a980c3bd936c4faa6c8a8daeb87c9e0ac3fb98431b918ac46df4d913f57d139e",
+      "step_hash": "7b2ff9082af13a271685aba5a37d40b83deb5f421bf3e323fbdfc1d484f268bb",
+      "contract_version": "2026.2",
+      "phase_input_digest": "1eb586acb1f0a98393b4f0fe49a7bfa4fce136d1474917da81f5ff93a8aa4ced",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.INCIDENT.IDENTITY.001",
+          "ART.METRICS.IDENTITY.001",
+          "ART.RUNBOOK.IDENTITY.001"
+        ],
+        "admitted_artifact_fingerprints": [
+          "30554a83551b4cfa61d0f4b6e5aff2b4e9a36aee05cee48ac9453a03f4cfc0fc",
+          "3b14d8556ea2cac3f02aa20ae1a270413a08aa1a4842822d6890b42fa35b3994",
+          "996f6a156c22874e30465507dbcb890b9bf08cd828ea1bb7442fdc44558a3147"
+        ],
+        "gate_state": {},
+        "phase_material": {
+          "domain_scores": [
+            {
+              "domain_id": "SE.OPS.IR",
+              "final_domain_score": 1.5,
+              "domain_cap": 5.0,
+              "evidence_class_distribution": {
+                "LOW": 0,
+                "MED": 0,
+                "HIGH": 1
+              }
+            },
+            {
+              "domain_id": "SE.OPS.MONITORING",
+              "final_domain_score": 1.2,
+              "domain_cap": 4.0,
+              "evidence_class_distribution": {
+                "LOW": 0,
+                "MED": 1,
+                "HIGH": 0
+              }
+            },
+            {
+              "domain_id": "SE.OPS.READINESS",
+              "final_domain_score": 1.6,
+              "domain_cap": 5.0,
+              "evidence_class_distribution": {
+                "LOW": 0,
+                "MED": 0,
+                "HIGH": 1
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "phase_index": 4,
+      "phase_id": "gate_evaluation",
+      "previous_step_hash": "7b2ff9082af13a271685aba5a37d40b83deb5f421bf3e323fbdfc1d484f268bb",
+      "step_hash": "101479399c1b97d16dcaa7f79bafc40fed784554139781206e0d612f4bfb8984",
+      "contract_version": "2026.2",
+      "phase_input_digest": "7c9794183d793c28710a96af8093e8b0b4ea6774a876d07a9954ad1e6689ca75",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.INCIDENT.IDENTITY.001",
+          "ART.METRICS.IDENTITY.001",
+          "ART.RUNBOOK.IDENTITY.001"
+        ],
+        "admitted_artifact_fingerprints": [
+          "30554a83551b4cfa61d0f4b6e5aff2b4e9a36aee05cee48ac9453a03f4cfc0fc",
+          "3b14d8556ea2cac3f02aa20ae1a270413a08aa1a4842822d6890b42fa35b3994",
+          "996f6a156c22874e30465507dbcb890b9bf08cd828ea1bb7442fdc44558a3147"
+        ],
+        "gate_state": {
+          "G0_INTEGRITY": "PASS",
+          "G1_MINIMUM_READINESS": "FAIL",
+          "G2_EVIDENCE_SUFFICIENCY": "PASS"
+        },
+        "phase_material": {
+          "gate_results": [
+            {
+              "gate_id": "G0_INTEGRITY",
+              "status": "PASS",
+              "blocking": false
+            },
+            {
+              "gate_id": "G1_MINIMUM_READINESS",
+              "status": "FAIL",
+              "blocking": true
+            },
+            {
+              "gate_id": "G2_EVIDENCE_SUFFICIENCY",
+              "status": "PASS",
+              "blocking": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "phase_index": 5,
+      "phase_id": "classification",
+      "previous_step_hash": "101479399c1b97d16dcaa7f79bafc40fed784554139781206e0d612f4bfb8984",
+      "step_hash": "5198bf0fd6fb7fea1a5b022663a0313357ef2e82a9536d78696dc1d6c235f9a9",
+      "contract_version": "2026.2",
+      "phase_input_digest": "668442e07704de63ea5bc4ad33a70eeb6d1506621c26936dfbbf295850da2d88",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.INCIDENT.IDENTITY.001",
+          "ART.METRICS.IDENTITY.001",
+          "ART.RUNBOOK.IDENTITY.001"
+        ],
+        "admitted_artifact_fingerprints": [
+          "30554a83551b4cfa61d0f4b6e5aff2b4e9a36aee05cee48ac9453a03f4cfc0fc",
+          "3b14d8556ea2cac3f02aa20ae1a270413a08aa1a4842822d6890b42fa35b3994",
+          "996f6a156c22874e30465507dbcb890b9bf08cd828ea1bb7442fdc44558a3147"
+        ],
+        "gate_state": {
+          "G0_INTEGRITY": "PASS",
+          "G1_MINIMUM_READINESS": "FAIL",
+          "G2_EVIDENCE_SUFFICIENCY": "PASS"
+        },
+        "phase_material": {
+          "classification": {
+            "status": "FAIL",
+            "classification_label": "NOT_READY",
+            "composite_score": 1.4333
+          }
+        }
+      }
+    },
+    {
+      "phase_index": 6,
+      "phase_id": "finalization",
+      "previous_step_hash": "5198bf0fd6fb7fea1a5b022663a0313357ef2e82a9536d78696dc1d6c235f9a9",
+      "step_hash": "5504a9760541ac16334a483a3f909247ff0505440f75445932e88ee12f687aeb",
+      "contract_version": "2026.2",
+      "phase_input_digest": "6d65155365dee0efe907d330b69341e560a5cfb8df9c1a5d200760fbacf68fa4",
+      "replay_capsule": {
+        "admitted_artifact_ids": [
+          "ART.INCIDENT.IDENTITY.001",
+          "ART.METRICS.IDENTITY.001",
+          "ART.RUNBOOK.IDENTITY.001"
+        ],
+        "admitted_artifact_fingerprints": [
+          "30554a83551b4cfa61d0f4b6e5aff2b4e9a36aee05cee48ac9453a03f4cfc0fc",
+          "3b14d8556ea2cac3f02aa20ae1a270413a08aa1a4842822d6890b42fa35b3994",
+          "996f6a156c22874e30465507dbcb890b9bf08cd828ea1bb7442fdc44558a3147"
+        ],
+        "gate_state": {
+          "G0_INTEGRITY": "PASS",
+          "G1_MINIMUM_READINESS": "FAIL",
+          "G2_EVIDENCE_SUFFICIENCY": "PASS"
+        },
+        "phase_material": {
+          "finalization": {
+            "target_protocol_id": "SE-OPS-PROTOCOL-2026.1",
+            "execution_mode": "MODE_STRICT_AUDIT",
+            "evaluation_timestamp": "1970-01-01T00:00:00Z",
+            "artifact_count": 3,
+            "evidence_trace_digest": "f9f53a1cd3a1745e442264716ee44c58a595f13416f8e1144704aadc4eb4588f"
+          }
+        }
+      }
+    }
+  ],
+  "execution_chain_terminal_hash": "5504a9760541ac16334a483a3f909247ff0505440f75445932e88ee12f687aeb",
+  "evidence_trace_table": [
+    {
+      "artifact_id": "ART.RUNBOOK.IDENTITY.001",
+      "artifact_type": "RUNBOOK",
+      "domain_id": "SE.OPS.READINESS",
+      "task_id": "SE.OPS.READINESS.T1",
+      "task_score_contribution": 4.0,
+      "domain_score_contribution": 1.6,
+      "evidence_class": "HIGH",
+      "trace_status": "USED"
+    },
+    {
+      "artifact_id": "ART.METRICS.IDENTITY.001",
+      "artifact_type": "METRICS_SNAPSHOT",
+      "domain_id": "SE.OPS.MONITORING",
+      "task_id": "SE.OPS.MONITORING.T1",
+      "task_score_contribution": 4.0,
+      "domain_score_contribution": 1.2,
+      "evidence_class": "MED",
+      "trace_status": "USED"
+    },
+    {
+      "artifact_id": "ART.INCIDENT.IDENTITY.001",
+      "artifact_type": "INCIDENT_REPORT",
+      "domain_id": "SE.OPS.IR",
+      "task_id": "SE.OPS.IR.T1",
+      "task_score_contribution": 5.0,
+      "domain_score_contribution": 1.5,
+      "evidence_class": "HIGH",
+      "trace_status": "USED"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+# Governance-critical ownership
+.github/workflows/* @neuron7x
+.github/CODEOWNERS @neuron7x
+.github/pull_request_template.md @neuron7x
+.pre-commit-config.yaml @neuron7x
+MANIFEST.json @neuron7x
+tools/* @neuron7x
+docs/PR_PREMERGE_ENGINEERING_CHECKLIST.md @neuron7x
+CONTRIBUTING.md @neuron7x
+governance/* @neuron7x
+docs/GOVERNANCE_CONTRACT_CHANGELOG.md @neuron7x
+schemas/governance-invariant-registry.schema.json @neuron7x
+docs/GOVERNANCE_NORMATIVE_SPEC.md @neuron7x
+docs/GOVERNANCE_POLICY_DRIFT_RUNBOOK.md @neuron7x
+repo-map.json @neuron7x
+requirements.txt @neuron7x

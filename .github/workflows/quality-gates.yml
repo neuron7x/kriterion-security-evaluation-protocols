@@ -1,0 +1,485 @@
+name: quality-gates
+
+on:
+  pull_request:
+  push:
+    branches: ["main"]
+
+concurrency:
+  group: quality-gates-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  PIP_VERSION: "25.3"
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+
+jobs:
+  inv-manifest-integrity:
+    name: inv-manifest-integrity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python tools/verify_manifest.py MANIFEST.json .
+
+  inv-schema-valid-acceptance:
+    name: inv-schema-valid-acceptance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --upgrade pip==${PIP_VERSION}
+      - run: python -m pip --version
+      - run: python -m pip install -r requirements.txt
+      - run: python tools/validate_json.py schemas/canonical-artifact.schema.json tests/fixtures/artifact.valid.json
+      - run: python tools/validate_json.py schemas/evaluation-result.schema.json tests/fixtures/evaluation-result.valid.json
+
+  inv-schema-invalid-rejection:
+    name: inv-schema-invalid-rejection
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --upgrade pip==${PIP_VERSION}
+      - run: python -m pip --version
+      - run: python -m pip install -r requirements.txt
+      - name: canonical artifact invalid must be rejected
+        run: |
+          set -euo pipefail
+          if python tools/validate_json.py schemas/canonical-artifact.schema.json tests/fixtures/artifact.invalid.missing-valid-fingerprint.json; then
+            echo "schema unexpectedly accepted invalid canonical artifact" >&2
+            exit 1
+          fi
+      - name: evaluation result invalid must be rejected
+        run: |
+          set -euo pipefail
+          if python tools/validate_json.py schemas/evaluation-result.schema.json tests/fixtures/evaluation-result.invalid.bad-gate.json; then
+            echo "schema unexpectedly accepted invalid evaluation result" >&2
+            exit 1
+          fi
+      - name: missing execution-state chain must be rejected
+        run: |
+          set -euo pipefail
+          if python tools/validate_json.py schemas/evaluation-result.schema.json tests/fixtures/evaluation-result.invalid.missing-execution-state-chain.json; then
+            echo "schema unexpectedly accepted missing execution_state_chain" >&2
+            exit 1
+          fi
+      - name: broken execution-state chain must be rejected
+        run: |
+          set -euo pipefail
+          if python tools/validate_json.py schemas/evaluation-result.schema.json tests/fixtures/evaluation-result.invalid.execution-chain-invalid-step-hash-format.json; then
+            echo "schema unexpectedly accepted broken execution_state_chain" >&2
+            exit 1
+          fi
+
+
+  inv-dependency-hermeticity:
+    name: inv-dependency-hermeticity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --upgrade pip==${PIP_VERSION}
+      - run: python -m pip --version
+      - run: python -m pip install -r requirements.txt
+      - run: python tools/check_dependency_hermeticity.py
+
+  inv-pr-intake-quality:
+    name: inv-pr-intake-quality
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - run: python tools/validate_pr_intake.py
+
+  inv-canonical-hash-stability:
+    name: inv-canonical-hash-stability
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python tools/check_canonical_hash_stability.py --repeat 3
+      - run: python tools/check_canonicalization_negative_cases.py
+
+  inv-worked-example-and-output-validity:
+    name: inv-worked-example-and-output-validity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --upgrade pip==${PIP_VERSION}
+      - run: python -m pip --version
+      - run: python -m pip install -r requirements.txt
+      - run: mkdir -p .ci-artifacts
+      - name: Strict git-authority precheck
+        run: |
+          git rev-parse --is-inside-work-tree
+          git diff --quiet
+          git diff --cached --quiet
+          test -z "$(git ls-files --others --exclude-standard tools schemas execution governance .github/workflows)"
+      - run: python tools/reference_runner.py examples/worked-example/SE_WORKED_EXAMPLE_INPUT.json --output /tmp/SE_WORKED_EXAMPLE_OUTPUT.check.json
+      - run: python tools/verify_execution_chain.py --input examples/worked-example/SE_WORKED_EXAMPLE_INPUT.json --result /tmp/SE_WORKED_EXAMPLE_OUTPUT.check.json
+      - run: |
+          set -o pipefail
+          python tools/assert_worked_example_semantics.py --out-dir .ci-artifacts 2>&1 | tee .ci-artifacts/worked-example.runner.log
+      - run: python tools/validate_json.py schemas/evaluation-result.schema.json .ci-artifacts/worked-example.output.json
+      - name: Build worked-example artifact manifest
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+
+          root = Path('.ci-artifacts')
+          (root / 'worked-example.run.status.json').write_text(
+              json.dumps({'status': 'OK', 'producer_job': 'inv-worked-example-and-output-validity'}, indent=2),
+              encoding='utf-8',
+          )
+          files = [
+              ('worked-example-log', root / 'worked-example.runner.log', 'diagnostic'),
+              ('worked-example-output', root / 'worked-example.output.json', 'required'),
+              ('worked-example-status', root / 'worked-example.run.status.json', 'required'),
+          ]
+          payload = {'artifacts': []}
+          for name, p, artifact_class in files:
+              b = p.read_bytes()
+              payload['artifacts'].append({
+                  'name': name,
+                  'path': p.as_posix(),
+                  'artifact_class': artifact_class,
+                  'size_bytes': len(b),
+                  'sha256': hashlib.sha256(b).hexdigest(),
+                  'producer_job': 'inv-worked-example-and-output-validity',
+              })
+          (root / 'worked-example.artifact-manifest.json').write_text(json.dumps(payload, indent=2), encoding='utf-8')
+          PY
+      - name: Upload worked-example logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: worked-example-logs
+          if-no-files-found: error
+          retention-days: 14
+          include-hidden-files: true
+          path: .ci-artifacts/worked-example.runner.log
+      - name: Upload worked-example evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: worked-example-evidence
+          if-no-files-found: error
+          retention-days: 14
+          include-hidden-files: true
+          path: |
+            .ci-artifacts/worked-example.runner.log
+            .ci-artifacts/worked-example.output.json
+            .ci-artifacts/worked-example.run.status.json
+            .ci-artifacts/worked-example.artifact-manifest.json
+
+  inv-fail-closed-missing-evidence:
+    name: inv-fail-closed-missing-evidence
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --upgrade pip==${PIP_VERSION}
+      - run: python -m pip --version
+      - run: python -m pip install -r requirements.txt
+      - run: python tools/assert_fail_closed_semantics.py
+
+
+  inv-gate-id-canonicality:
+    name: inv-gate-id-canonicality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python tools/assert_gate_benchmark_invariants.py --gate-fixture tests/fixtures/evaluation-result.valid.json --metrics benchmark/metrics.json
+
+
+  inv-benchmark-demo-and-honesty:
+    name: inv-benchmark-demo-and-honesty
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --upgrade pip==${PIP_VERSION}
+      - run: python -m pip --version
+      - run: python -m pip install -r requirements.txt
+      - run: mkdir -p .ci-artifacts
+      - name: Strict git-authority precheck
+        run: |
+          git rev-parse --is-inside-work-tree
+          git diff --quiet
+          git diff --cached --quiet
+          test -z "$(git ls-files --others --exclude-standard tools schemas execution governance .github/workflows)"
+      - run: python tools/reference_runner.py examples/worked-example/SE_WORKED_EXAMPLE_INPUT.json --output /tmp/SE_WORKED_EXAMPLE_OUTPUT.check.json
+      - run: python tools/verify_execution_chain.py --input examples/worked-example/SE_WORKED_EXAMPLE_INPUT.json --result /tmp/SE_WORKED_EXAMPLE_OUTPUT.check.json
+      - run: |
+          set -o pipefail
+          python benchmark/benchmark_runner.py 2>&1 | tee .ci-artifacts/benchmark.runner.log
+      - name: Stage benchmark evidence
+        if: always()
+        run: |
+          set -euo pipefail
+          [ -f benchmark/metrics.json ] || { echo "missing benchmark/metrics.json" >&2; exit 1; }
+          [ -f benchmark/results/case_level_results.csv ] || { echo "missing benchmark/results/case_level_results.csv" >&2; exit 1; }
+          cp benchmark/metrics.json .ci-artifacts/benchmark.metrics.json
+          cp benchmark/results/case_level_results.csv .ci-artifacts/benchmark.case_level_results.csv
+          cp benchmark/results/case-*.evaluation.json .ci-artifacts/
+      - name: Enforce benchmark regenerated-output parity
+        run: |
+          set -euo pipefail
+          git diff --exit-code -- benchmark/metrics.json benchmark/results/case_level_results.csv benchmark/results/case-*.evaluation.json
+      - run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+
+          root = Path('.ci-artifacts')
+          (root / 'benchmark.run.status.json').write_text(
+              json.dumps({'status': 'OK', 'producer_job': 'inv-benchmark-demo-and-honesty'}, indent=2),
+              encoding='utf-8',
+          )
+          files = [
+              ('benchmark-log', root / 'benchmark.runner.log', 'diagnostic'),
+              ('benchmark-metrics', root / 'benchmark.metrics.json', 'required'),
+              ('benchmark-case-results', root / 'benchmark.case_level_results.csv', 'required'),
+              ('benchmark-status', root / 'benchmark.run.status.json', 'required'),
+          ]
+          for case_file in sorted(root.glob('case-*.evaluation.json')):
+              files.append((f'benchmark-case-eval-{case_file.stem}', case_file, 'required'))
+          payload = {'artifacts': []}
+          for name, p, artifact_class in files:
+              if not p.exists():
+                  continue
+              b = p.read_bytes()
+              payload['artifacts'].append({
+                  'name': name,
+                  'path': p.as_posix(),
+                  'artifact_class': artifact_class,
+                  'size_bytes': len(b),
+                  'sha256': hashlib.sha256(b).hexdigest(),
+                  'producer_job': 'inv-benchmark-demo-and-honesty',
+              })
+          (root / 'benchmark.artifact-manifest.json').write_text(json.dumps(payload, indent=2), encoding='utf-8')
+          PY
+      - name: Upload benchmark logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: benchmark-logs
+          if-no-files-found: error
+          retention-days: 14
+          include-hidden-files: true
+          path: .ci-artifacts/benchmark.runner.log
+      - name: Upload benchmark evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: benchmark-evidence
+          if-no-files-found: error
+          retention-days: 14
+          include-hidden-files: true
+          path: |
+            .ci-artifacts/benchmark.runner.log
+            .ci-artifacts/benchmark.metrics.json
+            .ci-artifacts/benchmark.case_level_results.csv
+            .ci-artifacts/case-*.evaluation.json
+            .ci-artifacts/benchmark.run.status.json
+            .ci-artifacts/benchmark.artifact-manifest.json
+      - run: python tools/assert_gate_benchmark_invariants.py --metrics benchmark/metrics.json --gate-fixture tests/fixtures/evaluation-result.valid.json
+
+  inv-python-entrypoints-and-compile:
+    name: inv-python-entrypoints-and-compile
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --upgrade pip==${PIP_VERSION}
+      - run: python -m pip --version
+      - run: python -m pip install -r requirements.txt
+      - run: python tools/check_cli_contracts.py
+      - run: python -m unittest tests/semantic/test_fail_closed_semantics.py
+      - run: python -m unittest tests/semantic/test_canonicalization_edge_cases.py
+      - run: python -m unittest tests/semantic/test_reference_runner_injection_detection.py
+      - run: python -m unittest tests/semantic/test_verify_ci_artifact_manifest.py
+      - run: python -m unittest tests/semantic/test_verify_execution_chain.py
+      - run: python -m unittest discover -s tests/unit -p "test_*.py"
+      - run: python -m unittest discover -s tests/integration -p "test_*.py"
+      - run: python -m compileall tools benchmark pcos
+
+  inv-publication-internal-link-integrity:
+    name: inv-publication-internal-link-integrity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python tools/check_internal_links.py
+
+  audit-publication-external-link-reachability:
+    name: audit-publication-external-link-reachability
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python tools/check_external_links.py
+
+  inv-publication-surface-structure:
+    name: inv-publication-surface-structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python tools/validate_publication_surfaces.py
+
+  inv-ci-artifact-semantics-and-provenance:
+    name: inv-ci-artifact-semantics-and-provenance
+    runs-on: ubuntu-latest
+    needs:
+      - inv-worked-example-and-output-validity
+      - inv-benchmark-demo-and-honesty
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        with:
+          name: worked-example-evidence
+          path: .ci-artifacts/worked
+      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        with:
+          name: benchmark-evidence
+          path: .ci-artifacts/benchmark
+      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        with:
+          name: benchmark-logs
+          path: .ci-artifacts/benchmark
+      - uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        with:
+          name: worked-example-logs
+          path: .ci-artifacts/worked
+      - run: |
+          set -euo pipefail
+          python tools/verify_ci_artifact_manifest.py .ci-artifacts/worked/worked-example.artifact-manifest.json --expected-producer inv-worked-example-and-output-validity --name-prefix worked-example --root .ci-artifacts/worked --strip-path-prefix .ci-artifacts/ --require-name worked-example-output --require-name worked-example-status
+          python tools/verify_ci_artifact_manifest.py .ci-artifacts/benchmark/benchmark.artifact-manifest.json --expected-producer inv-benchmark-demo-and-honesty --name-prefix benchmark --root .ci-artifacts/benchmark --strip-path-prefix .ci-artifacts/ --require-name benchmark-metrics --require-name benchmark-case-results --require-name benchmark-status
+      - name: Build reviewer inspectability summary
+        if: always()
+        run: |
+          mkdir -p .ci-artifacts
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          summary = {
+            'status': 'OK',
+            'artifacts_reviewable': [
+              '.ci-artifacts/worked/worked-example.output.json',
+              '.ci-artifacts/worked/worked-example.run.status.json',
+              '.ci-artifacts/worked/worked-example.artifact-manifest.json',
+              '.ci-artifacts/benchmark/benchmark.metrics.json',
+              '.ci-artifacts/benchmark/benchmark.case_level_results.csv',
+              '.ci-artifacts/benchmark/benchmark.run.status.json',
+              '.ci-artifacts/benchmark/benchmark.artifact-manifest.json',
+            ]
+          }
+          Path('.ci-artifacts').mkdir(parents=True, exist_ok=True)
+          Path('.ci-artifacts/reviewer-inspectability.summary.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
+          PY
+      - name: Upload reviewer inspectability summary
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: reviewer-inspectability-summary
+          if-no-files-found: error
+          retention-days: 14
+          include-hidden-files: true
+          path: .ci-artifacts/reviewer-inspectability.summary.json
+
+  governance-hygiene:
+    name: governance-hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --upgrade pip==${PIP_VERSION}
+      - run: python -m pip --version
+      - run: python -m pip install -r requirements.txt
+      - run: python tools/check_dependency_hermeticity.py
+      - run: python tools/check_governance_nondeterminism.py
+      - run: python -m unittest tests/governance/test_validate_governance.py
+      - run: python -m unittest tests/governance/test_validate_governance_severity.py
+      - run: python -m unittest tests/governance/test_run_local_governance_baseline.py
+      - run: python -m unittest tests/governance/test_validate_governance_root_mapping.py
+      - run: python -m unittest tests/governance/test_codeowners_coverage.py
+      - run: python -m unittest tests/governance/test_pr_intake_validator.py
+      - run: python -m unittest tests/semantic/test_cli_contracts.py
+      - run: python -m unittest tests/semantic/test_dependency_hermeticity.py
+      - run: python tools/run_local_governance_baseline.py --execute
+      - run: python tools/validate_json.py schemas/governance-invariant-registry.schema.json governance/invariant-registry.json
+      - run: python tools/render_governance_checklist.py
+      - run: git diff --exit-code -- docs/PR_PREMERGE_ENGINEERING_CHECKLIST.md
+      - run: mkdir -p .ci-artifacts
+      - name: Strict git-authority precheck
+        run: |
+          git rev-parse --is-inside-work-tree
+          git diff --quiet
+          git diff --cached --quiet
+          test -z "$(git ls-files --others --exclude-standard tools schemas execution governance .github/workflows)"
+      - run: python tools/reference_runner.py examples/worked-example/SE_WORKED_EXAMPLE_INPUT.json --output /tmp/SE_WORKED_EXAMPLE_OUTPUT.check.json
+      - run: python tools/verify_execution_chain.py --input examples/worked-example/SE_WORKED_EXAMPLE_INPUT.json --result /tmp/SE_WORKED_EXAMPLE_OUTPUT.check.json
+      - name: Generate governance status artifact
+        if: always()
+        run: |
+          set -euo pipefail
+          mkdir -p .ci-artifacts
+          set +e
+          python tools/validate_governance.py --json | tee .ci-artifacts/governance-status.json
+          status=${PIPESTATUS[0]}
+          set -e
+          [ -s .ci-artifacts/governance-status.json ] || { echo "missing governance-status artifact" >&2; exit 2; }
+          exit "$status"
+      - run: python tools/validate_governance.py
+      - name: Upload governance status artifact
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: governance-status
+          if-no-files-found: error
+          retention-days: 14
+          include-hidden-files: true
+          path: .ci-artifacts/governance-status.json

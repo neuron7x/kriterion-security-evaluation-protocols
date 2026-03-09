@@ -1,0 +1,71 @@
+# Audit-Grade Community License 1.0 (AGCL-1.0)
+
+```text
+AUDIT-GRADE COMMUNITY LICENSE 1.0 (AGCL-1.0)
+
+Copyright (c) 2026 Yaroslav Vasylenko. All rights reserved.
+
+IMPORTANT NOTICE
+This license is intended for the public community tier of this repository. It is a copyright license for documents, schemas, prompts, benchmark materials, examples, and related non-software repository contents unless a file says otherwise. It is not OSI-approved open source, and it is not a substitute for legal advice.
+
+1. DEFINITIONS
+"Licensed Material" means all text documents, schemas, examples, benchmark artifacts, visual assets, HTML pages, and related repository contents made available by the Licensor under this license, excluding third-party materials and excluding any file that carries a more specific license notice.
+"Commercial Use" means any use primarily intended for commercial advantage or monetary compensation, including consulting, internal enterprise deployment, fee-based training, certification, paid subscriptions, managed services, SaaS features, paid workshops, commercial procurement, or use in client deliverables.
+"AI System" means any machine learning, generative AI, retrieval, ranking, recommendation, embedding, vectorization, training, fine-tuning, alignment, evaluation, or automated decision system.
+"White-Label Use" means presenting the Licensed Material, its structure, or a substantially similar derivative methodology as your own branded framework, protocol suite, benchmark, service, or training product.
+
+2. LICENSE GRANT
+Subject to the conditions below, the Licensor grants you a limited, worldwide, non-exclusive, non-transferable, non-sublicensable license to:
+(a) access, read, download, and store the Licensed Material;
+(b) copy and share complete, unmodified copies of the Licensed Material for non-commercial research, private study, peer discussion, education, and community review;
+(c) publicly reference the Licensed Material with proper attribution, provided no prohibited use occurs.
+
+3. CONDITIONS
+You must:
+(a) preserve all copyright, notice, and attribution statements;
+(b) identify the repository and author in any allowed redistribution;
+(c) distribute only complete, unmodified copies unless you have separate written permission;
+(d) stop using the Licensed Material immediately if this license terminates for breach.
+
+4. PROHIBITED USES
+You may not, without separate written permission from the Licensor:
+(a) use the Licensed Material for any Commercial Use;
+(b) modify, adapt, translate, abridge, remix, transform, or create derivative works for distribution;
+(c) perform White-Label Use;
+(d) remove, obscure, or alter notices, attribution, provenance, or license terms;
+(e) use the Licensed Material to train, fine-tune, align, calibrate, evaluate, benchmark, or otherwise improve any AI System;
+(f) convert any part of the Licensed Material into embeddings, vectors, semantic indexes, knowledge bases, RAG corpora, memory stores, or prompt libraries for an AI System;
+(g) include the Licensed Material in system prompts, hidden prompts, agent memory, benchmark datasets, or evaluation corpora used by an AI System;
+(h) use the Licensed Material in any fee-based report, audit, architecture review, hiring system, promotion process, or enterprise evaluation workflow;
+(i) claim endorsement, certification, or authorship by the Licensor;
+(j) use the Licensor's names, marks, logos, or framework titles except as allowed in the Trademark Usage Guidelines.
+
+5. AI AND TEXT-AND-DATA-MINING RESERVATION
+The Licensor expressly reserves all rights with respect to text and data mining, machine learning, model training, and AI-system ingestion to the maximum extent permitted by applicable law. No permission is granted for AI training, embedding, vectorization, dataset creation, retrieval augmentation, or any comparable machine processing of the Licensed Material.
+5.1. Any use of this material inside an AI System (including RAG, fine-tuning, embedding, or prompt library) constitutes immediate license termination and triggers liquidated damages of 10× the commercial license fee.
+
+6. ATTRIBUTION FOR ALLOWED REDISTRIBUTION
+Any allowed redistribution must include, in a reasonably prominent manner:
+- Repository title: KRITERION
+- Author: Yaroslav Vasylenko
+- Source: the original repository URL designated by the Licensor
+- License: AGCL-1.0
+
+7. SEPARATE COMMERCIAL RIGHTS
+Commercial rights are available only by a separate signed commercial agreement. Possession of the Licensed Material does not grant commercial rights.
+
+8. TERMINATION
+This license terminates automatically if you breach any condition. Upon termination, you must cease use and distribution of the Licensed Material and destroy copies under your control, except where retention is required by law.
+
+9. NO WARRANTY
+THE LICENSED MATERIAL IS PROVIDED "AS IS" WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ACCURACY, OR SUITABILITY FOR ANY PARTICULAR USE.
+
+10. LIMITATION OF LIABILITY
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE LICENSOR WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES ARISING FROM USE OF THE LICENSED MATERIAL.
+
+11. INTERPRETATION
+This license is to be interpreted to preserve the Licensor's retained rights to the maximum extent permitted by law. If a provision is unenforceable, the remaining provisions remain in effect.
+
+```
+
+Commercial permissions require a separate signed agreement. See `COMMERCIAL_LICENSE_AGREEMENT_TEMPLATE.md` and `NOTICE.md`.

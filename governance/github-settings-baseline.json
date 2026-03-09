@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "machine_readable_external_dependency_note": "These settings are external GitHub platform controls and are not directly enforceable from repository files; governance models them to prevent CI-vs-platform drift.",
+  "minimum_branch_protection": {
+    "require_pull_request": true,
+    "require_code_owner_reviews": true,
+    "require_linear_history": true,
+    "require_conversation_resolution": true,
+    "allow_force_pushes": false,
+    "allow_deletions": false,
+    "allow_bypass": false
+  },
+  "required_status_checks": [
+    "inv-manifest-integrity",
+    "inv-schema-valid-acceptance",
+    "inv-schema-invalid-rejection",
+    "inv-dependency-hermeticity",
+    "inv-canonical-hash-stability",
+    "inv-worked-example-and-output-validity",
+    "inv-fail-closed-missing-evidence",
+    "inv-gate-id-canonicality",
+    "inv-benchmark-demo-and-honesty",
+    "inv-python-entrypoints-and-compile",
+    "inv-publication-internal-link-integrity",
+    "inv-publication-surface-structure",
+    "inv-ci-artifact-semantics-and-provenance",
+    "governance-hygiene",
+    "inv-pr-intake-quality"
+  ],
+  "post_merge_ops_drift_policy": "Any drift between required_status_checks and repository CI job mapping is a governance incident requiring runbook execution."
+}

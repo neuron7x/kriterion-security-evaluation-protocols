@@ -1,0 +1,7 @@
+OBJECTIVE: produce deterministic execution artifacts
+SECTION: symbolic-only plan
+CONSTRAINT: keep deterministic outputs
+STEP: parse input symbols
+STEP: execute runtime graph
+VERIFY: verify outputs before closure
+CLOSE: finalize manifest

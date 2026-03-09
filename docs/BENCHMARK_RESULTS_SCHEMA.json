@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Audit-Grade Security Protocol Benchmark Result",
+  "type": "object",
+  "required": [
+    "report_metadata",
+    "dataset_manifest",
+    "model_runs",
+    "human_raters",
+    "metrics",
+    "claim_status"
+  ],
+  "properties": {
+    "report_metadata": {
+      "type": "object",
+      "required": [
+        "report_id",
+        "version",
+        "date",
+        "status"
+      ],
+      "properties": {
+        "report_id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "status": {
+          "enum": [
+            "preliminary",
+            "validated",
+            "superseded"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "dataset_manifest": {
+      "type": "object",
+      "required": [
+        "total_cases",
+        "synthetic_cases",
+        "real_anonymized_cases",
+        "case_ids"
+      ],
+      "properties": {
+        "total_cases": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "synthetic_cases": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "real_anonymized_cases": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "case_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "manifest_hash": {
+          "type": "string"
+        }
+      }
+    },
+    "model_runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "provider",
+          "marketing_name",
+          "exact_model_id",
+          "reasoning_mode",
+          "timestamp",
+          "system_prompt_hash",
+          "prompt_bundle_hash"
+        ],
+        "properties": {
+          "provider": {
+            "type": "string"
+          },
+          "marketing_name": {
+            "type": "string"
+          },
+          "exact_model_id": {
+            "type": "string"
+          },
+          "reasoning_mode": {
+            "type": "string"
+          },
+          "tooling_enabled": {
+            "type": "boolean"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "system_prompt_hash": {
+            "type": "string"
+          },
+          "prompt_bundle_hash": {
+            "type": "string"
+          },
+          "input_tokens": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "output_tokens": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "cost_usd": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "human_raters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "rater_id",
+          "rater_level",
+          "independence_attested"
+        ],
+        "properties": {
+          "rater_id": {
+            "type": "string"
+          },
+          "rater_level": {
+            "type": "string"
+          },
+          "independence_attested": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "task_level_weighted_alpha": {
+          "type": "number"
+        },
+        "task_level_weighted_kappa": {
+          "type": "number"
+        },
+        "gate_agreement": {
+          "type": "number"
+        },
+        "final_classification_agreement": {
+          "type": "number"
+        },
+        "domain_score_mae": {
+          "type": "number"
+        },
+        "domain_score_rmse": {
+          "type": "number"
+        },
+        "run_stddev": {
+          "type": "number"
+        },
+        "anti_gaming_recall": {
+          "type": "number"
+        },
+        "anti_gaming_false_positive_rate": {
+          "type": "number"
+        },
+        "prompt_injection_resistance": {
+          "type": "number"
+        },
+        "median_runtime_seconds": {
+          "type": "number"
+        },
+        "p95_runtime_seconds": {
+          "type": "number"
+        },
+        "median_cost_usd": {
+          "type": "number"
+        }
+      }
+    },
+    "claim_status": {
+      "type": "object",
+      "additionalProperties": {
+        "enum": [
+          "reported_not_verified",
+          "validated",
+          "superseded",
+          "withdrawn"
+        ]
+      }
+    }
+  }
+}

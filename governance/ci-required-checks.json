@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "immutable_reviewer_facing_check_names": true,
+  "required_checks": [
+    {
+      "check_name": "inv-manifest-integrity",
+      "job_id": "inv-manifest-integrity",
+      "critical": true
+    },
+    {
+      "check_name": "inv-schema-valid-acceptance",
+      "job_id": "inv-schema-valid-acceptance",
+      "critical": true
+    },
+    {
+      "check_name": "inv-schema-invalid-rejection",
+      "job_id": "inv-schema-invalid-rejection",
+      "critical": true
+    },
+    {
+      "check_name": "inv-dependency-hermeticity",
+      "job_id": "inv-dependency-hermeticity",
+      "critical": true
+    },
+    {
+      "check_name": "inv-canonical-hash-stability",
+      "job_id": "inv-canonical-hash-stability",
+      "critical": true
+    },
+    {
+      "check_name": "inv-worked-example-and-output-validity",
+      "job_id": "inv-worked-example-and-output-validity",
+      "critical": true
+    },
+    {
+      "check_name": "inv-fail-closed-missing-evidence",
+      "job_id": "inv-fail-closed-missing-evidence",
+      "critical": true
+    },
+    {
+      "check_name": "inv-gate-id-canonicality",
+      "job_id": "inv-gate-id-canonicality",
+      "critical": true
+    },
+    {
+      "check_name": "inv-benchmark-demo-and-honesty",
+      "job_id": "inv-benchmark-demo-and-honesty",
+      "critical": true
+    },
+    {
+      "check_name": "inv-python-entrypoints-and-compile",
+      "job_id": "inv-python-entrypoints-and-compile",
+      "critical": true
+    },
+    {
+      "check_name": "inv-publication-internal-link-integrity",
+      "job_id": "inv-publication-internal-link-integrity",
+      "critical": true
+    },
+    {
+      "check_name": "inv-publication-surface-structure",
+      "job_id": "inv-publication-surface-structure",
+      "critical": true
+    },
+    {
+      "check_name": "inv-ci-artifact-semantics-and-provenance",
+      "job_id": "inv-ci-artifact-semantics-and-provenance",
+      "critical": true
+    },
+    {
+      "check_name": "governance-hygiene",
+      "job_id": "governance-hygiene",
+      "critical": true
+    },
+    {
+      "check_name": "inv-pr-intake-quality",
+      "job_id": "inv-pr-intake-quality",
+      "critical": true
+    }
+  ]
+}

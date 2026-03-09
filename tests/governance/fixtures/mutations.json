@@ -1,0 +1,32 @@
+{
+  "unpinned_action": {
+    "target": ".github/workflows/quality-gates.yml",
+    "replace": "actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+    "with": "actions/checkout@v4",
+    "expected_violation_substring": "ACTION_PINNING"
+  },
+  "invalid_fail_closed_mutation": {
+    "target": "tools/assert_fail_closed_semantics.py",
+    "replace": "task[\"evidence_artifact_ids\"] = []",
+    "with": "payload['artifacts'] = []",
+    "expected_violation_substring": "FAIL_CLOSED"
+  },
+  "stale_generated_checklist": {
+    "target": "docs/PR_PREMERGE_ENGINEERING_CHECKLIST.md",
+    "replace": "python tools/verify_manifest.py MANIFEST.json .",
+    "with": "python tools/verify_manifest.py MANIFEST.json ./",
+    "expected_violation_substring": "DOC_ALIGNMENT"
+  },
+  "repo_map_pages_removed": {
+    "target": "repo-map.json",
+    "replace": "\".github/workflows/pages.yml\"",
+    "with": "\".github/workflows/pages.yml.removed\"",
+    "expected_violation_substring": "REPO_MAP"
+  },
+  "manifest_gitignore_removed": {
+    "target": "MANIFEST.json",
+    "replace": "\".gitignore\"",
+    "with": "\".gitignore.removed\"",
+    "expected_violation_substring": "MANIFEST_POLICY"
+  }
+}

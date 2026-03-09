@@ -1,0 +1,8 @@
+{
+  "lock_version": 1,
+  "python": ">=3.11,<3.13",
+  "packages": {
+    "jsonschema": "4.26.0",
+    "PyYAML": "6.0.3"
+  }
+}
